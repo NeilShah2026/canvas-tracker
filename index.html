@@ -1,0 +1,1750 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="description" content="A class prep tracker: your courses, your deadlines, and the reading or problem sets you owe before each session.">
+<meta name="color-scheme" content="light dark">
+<meta property="og:title" content="Before the Bell">
+<meta property="og:description" content="A class prep tracker: your courses, your deadlines, and the reading or problem sets you owe before each session.">
+<meta property="og:type" content="website">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<link rel="manifest" href="manifest.webmanifest">
+<meta name="theme-color" content="#F7F5F0" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#131613" media="(prefers-color-scheme: dark)">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Before the Bell">
+<style>
+  html {
+    color-scheme: light dark;
+    padding-top: env(safe-area-inset-top, 0px);
+    padding-bottom: env(safe-area-inset-bottom, 0px);
+  }
+  body { margin: 0; }
+  img { max-width: 100%; }
+  [hidden] { display: none !important; }
+</style>
+<title>Before the Bell</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700&family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600&display=swap">
+<style>
+  :root {
+    --ground: #F7F5F0;
+    --surface: #FFFDF9;
+    --surface-2: #EEEBE2;
+    --ink: #1C201D;
+    --ink-2: #5B6159;
+    --ink-3: #8A8F86;
+    --line: #DFDCD2;
+    --line-2: #C6C3B6;
+    --accent: #17594F;
+    --accent-soft: #DBE9E5;
+    --urgent: #A33A1C;
+    --urgent-soft: #F6E4DC;
+    --done: #8A8F86;
+    --h1c: #17594F; --h1s: #DBE9E5;
+    --h2c: #8F5A04; --h2s: #F2E5CB;
+    --h3c: #3B4BA0; --h3s: #E0E3F5;
+    --h4c: #A33A1C; --h4s: #F6E1D9;
+    --h5c: #6D3A75; --h5s: #EDE0F0;
+    --h6c: #4C6B2F; --h6s: #E3EDD6;
+    --shadow: 0 1px 2px rgba(28, 32, 29, .05), 0 6px 18px -12px rgba(28, 32, 29, .35);
+    --shadow-lg: 0 10px 40px -12px rgba(28, 32, 29, .35);
+    --display: "Bricolage Grotesque", "Trebuchet MS", sans-serif;
+    --body: "IBM Plex Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    --mono: "IBM Plex Mono", ui-monospace, "SFMono-Regular", Menlo, monospace;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --ground: #131613;
+      --surface: #1B1F1B;
+      --surface-2: #242924;
+      --ink: #E9EBE5;
+      --ink-2: #A5AA9F;
+      --ink-3: #7C8177;
+      --line: #2D322D;
+      --line-2: #40473F;
+      --accent: #5FBDAB;
+      --accent-soft: #17312C;
+      --urgent: #E6805F;
+      --urgent-soft: #36201A;
+      --done: #6F746B;
+      --h1c: #5FBDAB; --h1s: #17312C;
+      --h2c: #DBA548; --h2s: #332711;
+      --h3c: #93A0EC; --h3s: #1E2340;
+      --h4c: #E6805F; --h4s: #36201A;
+      --h5c: #C79AD0; --h5s: #2C1F30;
+      --h6c: #9DC46F; --h6s: #232E18;
+      --shadow: 0 1px 2px rgba(0, 0, 0, .3), 0 8px 20px -14px rgba(0, 0, 0, .8);
+      --shadow-lg: 0 14px 44px -12px rgba(0, 0, 0, .8);
+    }
+  }
+  :root[data-theme="dark"] {
+    --ground: #131613;
+    --surface: #1B1F1B;
+    --surface-2: #242924;
+    --ink: #E9EBE5;
+    --ink-2: #A5AA9F;
+    --ink-3: #7C8177;
+    --line: #2D322D;
+    --line-2: #40473F;
+    --accent: #5FBDAB;
+    --accent-soft: #17312C;
+    --urgent: #E6805F;
+    --urgent-soft: #36201A;
+    --done: #6F746B;
+    --h1c: #5FBDAB; --h1s: #17312C;
+    --h2c: #DBA548; --h2s: #332711;
+    --h3c: #93A0EC; --h3s: #1E2340;
+    --h4c: #E6805F; --h4s: #36201A;
+    --h5c: #C79AD0; --h5s: #2C1F30;
+    --h6c: #9DC46F; --h6s: #232E18;
+    --shadow: 0 1px 2px rgba(0, 0, 0, .3), 0 8px 20px -14px rgba(0, 0, 0, .8);
+    --shadow-lg: 0 14px 44px -12px rgba(0, 0, 0, .8);
+  }
+
+  * { box-sizing: border-box; }
+  body {
+    background: var(--ground);
+    color: var(--ink);
+    font-family: var(--body);
+    font-size: 15px;
+    line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
+  }
+  .wrap { max-width: 940px; margin: 0 auto; padding: 0 20px; padding-block: 0 80px; }
+
+  /* ---- masthead ---- */
+  .masthead {
+    position: sticky; top: env(safe-area-inset-top, 0px); z-index: 30;
+    background: color-mix(in srgb, var(--ground) 92%, transparent);
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid var(--line);
+  }
+  .masthead-in {
+    max-width: 940px; margin: 0 auto; padding: 0 20px; padding-block: 11px;
+    display: flex; align-items: center; gap: 10px; flex-wrap: wrap;
+  }
+  .brand {
+    font-family: var(--display); font-weight: 700; font-size: 18px;
+    letter-spacing: -.015em; margin: 0; margin-right: auto;
+  }
+  .brand em { font-style: normal; color: var(--accent); }
+
+  /* ---- buttons ---- */
+  button { font: inherit; }
+  .btn {
+    font-family: var(--mono); font-size: 11.5px; font-weight: 500; letter-spacing: .02em;
+    border: 1px solid var(--line-2); background: var(--surface); color: var(--ink);
+    border-radius: 7px; padding: 6px 11px; cursor: pointer;
+    transition: border-color .15s, background .15s;
+  }
+  .btn:hover { border-color: var(--ink-3); }
+  .btn:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+  .btn-primary { background: var(--accent); border-color: var(--accent); color: var(--surface); }
+  .btn-primary:hover { filter: brightness(1.08); border-color: var(--accent); }
+  .btn-danger { color: var(--urgent); border-color: var(--urgent-soft); }
+  .btn-danger:hover { border-color: var(--urgent); }
+  .btn-ghost { background: transparent; border-color: transparent; color: var(--ink-2); }
+  .btn-ghost:hover { border-color: var(--line-2); }
+
+  /* ---- hero ---- */
+  .hero { padding-block: 32px 18px; }
+  .kicker {
+    font-family: var(--mono); font-size: 11px; font-weight: 500; letter-spacing: .14em;
+    text-transform: uppercase; color: var(--ink-3); margin: 0 0 10px;
+  }
+  h1 {
+    font-family: var(--display); font-weight: 700;
+    font-size: clamp(29px, 5.6vw, 42px); line-height: 1.05;
+    letter-spacing: -.03em; margin: 0 0 8px; text-wrap: balance;
+  }
+  .sub { color: var(--ink-2); margin: 0; max-width: 58ch; }
+
+  /* ---- sample banner ---- */
+  .banner {
+    display: flex; gap: 12px; align-items: center; flex-wrap: wrap;
+    background: var(--accent-soft); border: 1px solid transparent;
+    border-radius: 10px; padding: 12px 14px; margin-block: 20px 0;
+    font-size: 13.5px; color: var(--ink);
+  }
+  .banner strong { font-weight: 600; }
+  .banner .btn { background: var(--surface); }
+
+  /* ---- tiles ---- */
+  .tiles { display: grid; gap: 12px; margin-block: 22px; grid-template-columns: repeat(3, 1fr); }
+  .tile { background: var(--surface); border: 1px solid var(--line); border-radius: 10px; padding: 14px 16px; }
+  .tile.lead { border-color: var(--line-2); box-shadow: var(--shadow); }
+  .tile-label {
+    font-family: var(--mono); font-size: 10px; letter-spacing: .12em;
+    text-transform: uppercase; color: var(--ink-3); margin-bottom: 7px;
+  }
+  .tile-value {
+    font-family: var(--display); font-weight: 700; font-size: 25px; line-height: 1.1;
+    letter-spacing: -.02em; font-variant-numeric: tabular-nums;
+  }
+  .tile-note { font-size: 12.5px; color: var(--ink-2); margin-top: 4px; line-height: 1.35; }
+  .tile.lead .tile-value { color: var(--urgent); }
+
+  /* ---- progress ---- */
+  .progress-row { display: flex; align-items: center; gap: 12px; margin-block: 4px 24px; }
+  .bar { flex: 1; height: 6px; border-radius: 99px; background: var(--surface-2); overflow: hidden; }
+  .bar span { display: block; height: 100%; border-radius: 99px; background: var(--accent); transition: width .28s ease; }
+  .bar-text { font-family: var(--mono); font-size: 11.5px; color: var(--ink-2); font-variant-numeric: tabular-nums; white-space: nowrap; }
+
+  /* ---- controls ---- */
+  .controls { display: flex; gap: 8px; flex-wrap: wrap; align-items: center; padding-block: 2px 20px; }
+  .chip {
+    font-family: var(--mono); font-size: 11.5px; font-weight: 500; letter-spacing: .02em;
+    border: 1px solid var(--line-2); background: var(--surface); color: var(--ink-2);
+    border-radius: 99px; padding: 5px 12px; cursor: pointer;
+    transition: background .15s, color .15s, border-color .15s;
+  }
+  .chip:hover { border-color: var(--ink-3); }
+  .chip:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+  .chip[aria-pressed="true"] { background: var(--ink); color: var(--ground); border-color: var(--ink); }
+  .chip[aria-pressed="true"][data-hue] { color: var(--surface); }
+  .spacer { flex: 1; }
+  .toggle {
+    display: inline-flex; align-items: center; gap: 7px; cursor: pointer;
+    font-family: var(--mono); font-size: 11.5px; color: var(--ink-2);
+  }
+
+  /* ---- day bands ---- */
+  .day { display: grid; grid-template-columns: 104px 1fr; gap: 18px; padding-block: 0 26px; }
+  .day-rail-in { position: sticky; top: calc(env(safe-area-inset-top, 0px) + 60px); }
+  .rail-weekday { font-family: var(--mono); font-size: 11px; letter-spacing: .12em; text-transform: uppercase; color: var(--ink-3); }
+  .rail-date { font-family: var(--display); font-weight: 700; font-size: 21px; letter-spacing: -.02em; line-height: 1.2; }
+  .rail-rel { font-family: var(--mono); font-size: 11px; color: var(--ink-2); margin-top: 2px; }
+  .day.is-urgent .rail-rel { color: var(--urgent); font-weight: 500; }
+  .day.is-past .rail-date, .day.is-past .rail-weekday { color: var(--ink-3); }
+  .day-items { display: flex; flex-direction: column; gap: 10px; min-width: 0; }
+
+  /* ---- item cards ---- */
+  .item {
+    display: grid; grid-template-columns: 4px 1fr; overflow: hidden;
+    background: var(--surface); border: 1px solid var(--line); border-radius: 10px; min-width: 0;
+  }
+  .stripe { background: var(--hue, var(--line-2)); }
+  .item-body { padding: 13px 15px 13px 13px; min-width: 0; }
+  .item-top { display: flex; gap: 11px; align-items: flex-start; min-width: 0; }
+  .item-head { flex: 1; min-width: 0; }
+  .eyebrow {
+    display: flex; gap: 8px; align-items: center; flex-wrap: wrap;
+    font-family: var(--mono); font-size: 10.5px; letter-spacing: .05em; margin-bottom: 4px;
+  }
+  .course-tag { font-weight: 600; color: var(--hue, var(--ink-2)); }
+  .kind {
+    text-transform: uppercase; letter-spacing: .1em; font-size: 9.5px;
+    padding: 2px 6px; border-radius: 3px; background: var(--surface-2); color: var(--ink-2);
+  }
+  .kind.k-exam { background: var(--urgent-soft); color: var(--urgent); font-weight: 600; }
+  .kind.k-live { background: var(--accent-soft); color: var(--accent); font-weight: 600; }
+  .clock { color: var(--ink-3); font-variant-numeric: tabular-nums; }
+  .item-title {
+    font-family: var(--display); font-weight: 500; font-size: 16px; line-height: 1.25;
+    letter-spacing: -.012em; margin: 0; text-wrap: pretty; overflow-wrap: anywhere;
+  }
+  .item-title a { color: inherit; text-decoration: none; }
+  .item-title a:hover { text-decoration: underline; text-underline-offset: 3px; }
+  .item-side { display: flex; align-items: center; gap: 4px; flex: none; padding-top: 1px; }
+  .pts { font-family: var(--mono); font-size: 11.5px; color: var(--ink-2); font-variant-numeric: tabular-nums; white-space: nowrap; }
+  .edit {
+    border: none; background: transparent; color: var(--ink-3); cursor: pointer;
+    border-radius: 6px; padding: 3px 5px; line-height: 1; font-size: 14px;
+  }
+  .edit:hover { background: var(--surface-2); color: var(--ink); }
+  .edit:focus-visible { outline: 2px solid var(--accent); outline-offset: 1px; }
+
+  /* checkboxes */
+  .check { display: inline-flex; align-items: center; justify-content: center; cursor: pointer; padding-top: 1px; }
+  input[type="checkbox"] {
+    position: absolute; width: 1px; height: 1px; margin: -1px; padding: 0;
+    overflow: hidden; clip: rect(0 0 0 0); clip-path: inset(50%); border: 0;
+  }
+  .box {
+    width: 19px; height: 19px; border-radius: 5px; flex: none;
+    border: 1.5px solid var(--line-2); background: var(--ground);
+    display: inline-flex; align-items: center; justify-content: center;
+    transition: background .15s, border-color .15s;
+  }
+  .box::after {
+    content: ""; width: 9px; height: 5px; margin-top: -2px;
+    border-left: 2px solid var(--surface); border-bottom: 2px solid var(--surface);
+    transform: rotate(-45deg) scale(.6); opacity: 0; transition: opacity .12s, transform .12s;
+  }
+  input[type="checkbox"]:checked + .box { background: var(--accent); border-color: var(--accent); }
+  input[type="checkbox"]:checked + .box::after { opacity: 1; transform: rotate(-45deg) scale(1); }
+  input[type="checkbox"]:focus-visible + .box { outline: 2px solid var(--accent); outline-offset: 2px; }
+  .box.sm { width: 15px; height: 15px; border-radius: 4px; }
+  .box.sm::after { width: 7px; height: 4px; }
+
+  .item[data-done="true"] { background: var(--ground); border-style: dashed; }
+  .item[data-done="true"] .item-title { color: var(--done); text-decoration: line-through; text-decoration-thickness: 1px; }
+  .item[data-done="true"] .stripe { opacity: .4; }
+
+  /* prep list */
+  .prep {
+    list-style: none; margin: 11px 0 0; padding: 10px 0 0;
+    border-top: 1px solid var(--line); display: flex; flex-direction: column; gap: 7px;
+  }
+  .prep label { display: flex; gap: 9px; align-items: flex-start; cursor: pointer; min-width: 0; }
+  .prep-type {
+    font-family: var(--mono); font-size: 9.5px; letter-spacing: .1em; text-transform: uppercase;
+    color: var(--ink-3); flex: none; width: 74px; padding-top: 2px;
+  }
+  .prep-text { font-size: 13.5px; color: var(--ink); line-height: 1.4; min-width: 0; overflow-wrap: anywhere; }
+  .prep input:checked ~ .prep-text { color: var(--done); text-decoration: line-through; text-decoration-thickness: 1px; }
+  .inclass { margin: 10px 0 0; font-size: 12.5px; color: var(--ink-3); line-height: 1.45; }
+  .inclass b { font-family: var(--mono); font-size: 9.5px; letter-spacing: .1em; text-transform: uppercase; font-weight: 500; }
+
+  .empty {
+    border: 1px dashed var(--line-2); border-radius: 10px; padding: 34px 20px;
+    text-align: center; color: var(--ink-2); font-size: 14px;
+  }
+  .empty p { margin: 0 0 14px; }
+
+  /* ---- dialogs ---- */
+  dialog {
+    border: 1px solid var(--line-2); border-radius: 14px; padding: 0;
+    background: var(--surface); color: var(--ink);
+    width: min(560px, calc(100vw - 32px)); max-height: 86vh;
+    box-shadow: var(--shadow-lg);
+  }
+  dialog::backdrop { background: rgba(10, 14, 11, .42); backdrop-filter: blur(2px); }
+  .dlg-head {
+    display: flex; align-items: center; gap: 10px;
+    padding: 16px 18px 12px; border-bottom: 1px solid var(--line);
+  }
+  .dlg-title {
+    font-family: var(--display); font-weight: 700; font-size: 18px;
+    letter-spacing: -.02em; margin: 0; margin-right: auto;
+  }
+  .dlg-body { padding: 16px 18px; overflow-y: auto; }
+  .dlg-foot {
+    display: flex; gap: 8px; align-items: center; flex-wrap: wrap;
+    padding: 12px 18px 16px; border-top: 1px solid var(--line);
+  }
+  .dlg-foot .spacer { flex: 1; }
+
+  .field { margin-bottom: 14px; }
+  .field:last-child { margin-bottom: 0; }
+  .field > label, .legend {
+    display: block; font-family: var(--mono); font-size: 10px; letter-spacing: .12em;
+    text-transform: uppercase; color: var(--ink-3); margin-bottom: 6px;
+  }
+  .row { display: flex; gap: 10px; flex-wrap: wrap; }
+  .row > .field { flex: 1; min-width: 132px; margin-bottom: 14px; }
+  input[type="text"], input[type="date"], input[type="time"], input[type="number"], input[type="url"], select, textarea {
+    width: 100%; font: inherit; font-size: 14px;
+    color: var(--ink); background: var(--ground);
+    border: 1px solid var(--line-2); border-radius: 7px; padding: 8px 10px;
+  }
+  textarea { font-family: var(--mono); font-size: 12px; line-height: 1.5; resize: vertical; }
+  input:focus-visible, select:focus-visible, textarea:focus-visible {
+    outline: 2px solid var(--accent); outline-offset: 1px; border-color: var(--accent);
+  }
+  .hint { font-size: 12px; color: var(--ink-3); margin: 6px 0 0; line-height: 1.4; }
+  .err { font-size: 12.5px; color: var(--urgent); margin: 12px 0 0; }
+  .ok { font-size: 13px; color: var(--accent); margin: 12px 0 0; font-weight: 500; }
+
+  .steps { margin: 0 0 16px; padding-left: 20px; font-size: 13.5px; color: var(--ink-2); line-height: 1.6; }
+  .steps strong { color: var(--ink); font-weight: 600; }
+  code {
+    font-family: var(--mono); font-size: 12px; background: var(--surface-2);
+    padding: 1px 5px; border-radius: 4px;
+  }
+  .drop {
+    border: 1.5px dashed var(--line-2); border-radius: 10px;
+    padding: 26px 16px; text-align: center; background: var(--ground);
+    transition: border-color .15s, background .15s;
+  }
+  .drop.over { border-color: var(--accent); background: var(--accent-soft); }
+  .drop-main { margin: 0 0 4px; font-size: 14px; font-weight: 500; }
+  .drop-sub { margin: 0; font-size: 12.5px; color: var(--ink-3); }
+  .link-btn {
+    border: none; background: none; padding: 0; cursor: pointer;
+    color: var(--accent); font: inherit; text-decoration: underline; text-underline-offset: 2px;
+  }
+  .link-btn:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; border-radius: 3px; }
+  .opt { margin-bottom: 22px; padding-bottom: 20px; border-bottom: 1px solid var(--line); }
+  .opt:last-of-type { border-bottom: none; padding-bottom: 0; margin-bottom: 0; }
+  .opt-title {
+    font-family: var(--display); font-weight: 700; font-size: 15px;
+    letter-spacing: -.01em; margin: 0 0 10px;
+  }
+  .bm-wrap { margin: 10px 0 4px; }
+  .bookmarklet {
+    display: inline-block; cursor: grab;
+    background: var(--accent); color: var(--surface);
+    font-family: var(--mono); font-size: 12.5px; font-weight: 600; letter-spacing: .02em;
+    text-decoration: none; padding: 8px 15px; border-radius: 8px;
+    box-shadow: var(--shadow);
+  }
+  .bookmarklet:active { cursor: grabbing; }
+  .bookmarklet:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
+  .paste-wrap { margin-top: 14px; }
+  .paste-wrap summary {
+    cursor: pointer; font-family: var(--mono); font-size: 11px;
+    letter-spacing: .08em; text-transform: uppercase; color: var(--ink-3);
+  }
+  .paste-wrap summary:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; border-radius: 3px; }
+  .paste-wrap textarea { margin-top: 10px; }
+
+  .prep-rows { display: flex; flex-direction: column; gap: 8px; }
+  .prep-row { display: flex; gap: 8px; align-items: center; }
+  .prep-row input:first-child { flex: 0 0 116px; }
+  .prep-row input:nth-child(2) { flex: 1; min-width: 0; }
+  .x {
+    border: 1px solid var(--line-2); background: var(--ground); color: var(--ink-3);
+    border-radius: 6px; width: 30px; height: 34px; flex: none; cursor: pointer; font-size: 15px; line-height: 1;
+  }
+  .x:hover { color: var(--urgent); border-color: var(--urgent); }
+
+  .course-list { display: flex; flex-direction: column; gap: 8px; margin-bottom: 16px; }
+  .course-row {
+    display: flex; gap: 10px; align-items: center;
+    border: 1px solid var(--line); border-radius: 8px; padding: 9px 11px; background: var(--ground);
+  }
+  .swatch { width: 14px; height: 14px; border-radius: 4px; flex: none; background: var(--hue); }
+  .course-row .name { flex: 1; min-width: 0; font-size: 14px; overflow-wrap: anywhere; }
+  .course-row .code { font-family: var(--mono); font-size: 11.5px; color: var(--ink-2); }
+  .hue-picker { display: flex; gap: 7px; flex-wrap: wrap; }
+  .hue-dot {
+    width: 26px; height: 26px; border-radius: 7px; cursor: pointer;
+    border: 2px solid transparent; background: var(--hue); padding: 0;
+  }
+  .hue-dot[aria-pressed="true"] { border-color: var(--ink); }
+  .hue-dot:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+
+  footer {
+    margin-top: 32px; padding-top: 18px; border-top: 1px solid var(--line);
+    font-size: 12.5px; color: var(--ink-3); line-height: 1.6;
+  }
+  footer p { margin: 0 0 8px; }
+
+  @media (max-width: 680px) {
+    .tiles { grid-template-columns: 1fr; }
+    .day { grid-template-columns: 1fr; gap: 8px; }
+    .day-rail-in { position: static; display: flex; align-items: baseline; gap: 9px; }
+    .rail-date { font-size: 17px; }
+    .rail-rel { margin-top: 0; }
+    .prep label { flex-wrap: wrap; }
+    .prep-type { width: auto; }
+    .prep-row { flex-wrap: wrap; }
+    .prep-row input:first-child { flex: 1 1 100%; }
+  }
+  @media (prefers-reduced-motion: reduce) { * { transition: none !important; } }
+</style>
+</head>
+<body>
+<header class="masthead">
+  <div class="masthead-in">
+    <p class="brand">Before the <em>Bell</em></p>
+    <button class="btn" id="btn-courses" type="button">Courses</button>
+    <button class="btn" id="btn-import" type="button">Import</button>
+    <button class="btn" id="btn-backup" type="button">Backup</button>
+    <button class="btn btn-primary" id="btn-add" type="button">Add item</button>
+  </div>
+</header>
+
+<div class="wrap">
+  <section class="hero">
+    <p class="kicker">Class prep tracker</p>
+    <h1>What has to be ready before class</h1>
+    <p class="sub">Put in your courses, your deadlines, and the reading or problem sets you owe before each session. Prep breaks into its own checklist, so you can see what's actually left rather than one undifferentiated due date.</p>
+  </section>
+
+  <div class="banner" id="banner" hidden>
+    <div><strong>This is sample data</strong> — two made-up courses so the page isn't empty. Clear it when you're ready to add your own.</div>
+    <div class="spacer"></div>
+    <button class="btn" id="btn-clear-sample" type="button">Clear sample data</button>
+  </div>
+
+  <section class="tiles" id="tiles"></section>
+
+  <div class="progress-row">
+    <div class="bar"><span id="barfill" style="width:0%"></span></div>
+    <div class="bar-text" id="bartext">0 of 0 done</div>
+  </div>
+
+  <div class="controls" id="controls"></div>
+
+  <main id="stream"></main>
+
+  <footer>
+    <p><strong>Your data stays in this browser.</strong> Nothing is uploaded, and nobody else who opens this page sees your items — each person gets their own copy. That also means clearing your browser data wipes it, and it won't follow you to another device.</p>
+    <p>Use <em>Backup</em> to copy your data out as text, and to paste it back in on another browser.</p>
+  </footer>
+</div>
+
+<!-- ============ item dialog ============ -->
+<dialog id="dlg-item">
+  <form method="dialog" id="form-item">
+    <div class="dlg-head">
+      <h2 class="dlg-title" id="item-dlg-title">Add item</h2>
+    </div>
+    <div class="dlg-body">
+      <p class="err" id="item-err" hidden></p>
+
+      <div class="field">
+        <label for="f-title">What is it</label>
+        <input type="text" id="f-title" maxlength="160" placeholder="Ch. 4 problem set" required>
+      </div>
+
+      <div class="row">
+        <div class="field">
+          <label for="f-course">Course</label>
+          <select id="f-course"></select>
+        </div>
+        <div class="field">
+          <label for="f-kind">Type</label>
+          <select id="f-kind">
+            <option value="prep">Prep — be ready for class</option>
+            <option value="due">Due — submit it</option>
+            <option value="exam">Exam</option>
+            <option value="live">In class</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="field">
+          <label for="f-date">Date</label>
+          <input type="date" id="f-date" required>
+        </div>
+        <div class="field">
+          <label for="f-time">Time</label>
+          <input type="time" id="f-time" value="08:00">
+        </div>
+        <div class="field">
+          <label for="f-points">Points</label>
+          <input type="number" id="f-points" min="0" max="10000" step="1" placeholder="optional">
+        </div>
+      </div>
+
+      <div class="field">
+        <label for="f-url">Link</label>
+        <input type="url" id="f-url" placeholder="https://… (optional)">
+      </div>
+
+      <div class="field">
+        <span class="legend">Prep checklist — what to finish beforehand</span>
+        <div class="prep-rows" id="prep-rows"></div>
+        <button class="btn btn-ghost" type="button" id="btn-add-prep" style="margin-top:8px">+ Add a prep step</button>
+        <p class="hint">Each step gets its own checkbox. The item counts as done when they all are.</p>
+      </div>
+
+      <div class="field">
+        <label for="f-inclass">Happens in class</label>
+        <input type="text" id="f-inclass" maxlength="240" placeholder="Quiz 2 · problem set review (optional)">
+        <p class="hint">Shown in grey — things you don't have to do beforehand.</p>
+      </div>
+    </div>
+    <div class="dlg-foot">
+      <button class="btn btn-danger" type="button" id="btn-delete-item" hidden>Delete</button>
+      <div class="spacer"></div>
+      <button class="btn" type="button" data-close>Cancel</button>
+      <button class="btn btn-primary" type="button" id="btn-save-item">Save</button>
+    </div>
+  </form>
+</dialog>
+
+<!-- ============ courses dialog ============ -->
+<dialog id="dlg-courses">
+  <div class="dlg-head">
+    <h2 class="dlg-title">Courses</h2>
+  </div>
+  <div class="dlg-body">
+    <p class="err" id="course-err" hidden></p>
+    <div class="course-list" id="course-list"></div>
+
+    <div class="row">
+      <div class="field">
+        <label for="f-ccode">Short code</label>
+        <input type="text" id="f-ccode" maxlength="14" placeholder="ACC1000">
+      </div>
+      <div class="field">
+        <label for="f-cname">Full name</label>
+        <input type="text" id="f-cname" maxlength="80" placeholder="Financial Accounting">
+      </div>
+    </div>
+    <div class="field">
+      <span class="legend">Colour</span>
+      <div class="hue-picker" id="hue-picker"></div>
+    </div>
+    <button class="btn btn-primary" type="button" id="btn-add-course">Add course</button>
+  </div>
+  <div class="dlg-foot">
+    <div class="spacer"></div>
+    <button class="btn" type="button" data-close>Done</button>
+  </div>
+</dialog>
+
+<!-- ============ import dialog ============ -->
+<dialog id="dlg-import">
+  <div class="dlg-head">
+    <h2 class="dlg-title">Import from Canvas</h2>
+  </div>
+  <div class="dlg-body">
+    <section class="opt" id="opt-bm" hidden>
+      <h3 class="opt-title">One click — everything</h3>
+      <ol class="steps">
+        <li>Drag this button up to your bookmarks bar:
+          <div class="bm-wrap"><a class="bookmarklet" id="bm-link" href="#" draggable="true">Sync my Canvas</a></div>
+        </li>
+        <li>Open Canvas and sign in as normal.</li>
+        <li>Click the bookmark. Your tracker opens with everything filled in.</li>
+      </ol>
+      <p class="hint">Pulls courses, assignments, due dates <em>and</em> prep pages — the readings, videos and problem sets owed before each class. It runs on Canvas's own page using your existing login, so there's no password or access token to hand over, and your assignments travel in the link itself rather than through any server.</p>
+    </section>
+
+    <section class="opt">
+      <h3 class="opt-title">Or import a calendar file</h3>
+      <ol class="steps">
+        <li>In Canvas, open <strong>Calendar</strong> and click <strong>Calendar Feed</strong> in the right sidebar.</li>
+        <li>Open that link in a new tab — your browser downloads a <code>.ics</code> file.</li>
+        <li>Drop the file below.</li>
+      </ol>
+
+    <div class="drop" id="drop">
+      <p class="drop-main">Drop your <code>.ics</code> file here</p>
+      <p class="drop-sub">or <button class="link-btn" type="button" id="btn-pick">choose a file</button></p>
+      <input type="file" id="f-file" accept=".ics,text/calendar" hidden>
+    </div>
+
+    <details class="paste-wrap">
+      <summary>Paste the file contents instead</summary>
+      <textarea id="f-ics" rows="6" spellcheck="false" placeholder="BEGIN:VCALENDAR&#10;..."></textarea>
+      <button class="btn" type="button" id="btn-parse-paste" style="margin-top:8px">Import pasted text</button>
+    </details>
+
+    <p class="hint">A calendar export carries assignment names and due dates only — no prep detail. Add those as prep steps yourself, or use the one-click sync above.</p>
+    </section>
+
+    <p class="err" id="import-err" hidden></p>
+    <p class="ok" id="import-ok" hidden></p>
+
+    <p class="hint">Either way, re-importing later updates what changed and keeps everything you've ticked off.</p>
+  </div>
+  <div class="dlg-foot">
+    <div class="spacer"></div>
+    <button class="btn" type="button" data-close>Close</button>
+  </div>
+</dialog>
+
+<!-- ============ backup dialog ============ -->
+<dialog id="dlg-backup">
+  <div class="dlg-head">
+    <h2 class="dlg-title">Backup &amp; restore</h2>
+  </div>
+  <div class="dlg-body">
+    <div class="field">
+      <label for="f-backup">Your data as text</label>
+      <textarea id="f-backup" rows="8" spellcheck="false"></textarea>
+      <p class="hint" id="backup-hint">Copy this somewhere safe. To restore, paste a backup over it and press Restore.</p>
+    </div>
+  </div>
+  <div class="dlg-foot">
+    <button class="btn" type="button" id="btn-copy">Copy</button>
+    <button class="btn" type="button" id="btn-restore">Restore from pasted text</button>
+    <div class="spacer"></div>
+    <button class="btn" type="button" data-close>Close</button>
+  </div>
+</dialog>
+
+<script>
+(function () {
+  "use strict";
+
+  var LS_KEY = "before-the-bell-v1";
+  var HUES = ["h1", "h2", "h3", "h4", "h5", "h6"];
+  var KIND_LABEL = { prep: "Prep", due: "Due", exam: "Exam", live: "In class" };
+  var PREP_SUGGESTIONS = ["Reading", "Video", "Problem set", "Practice", "Notes", "Review"];
+
+  var fWeekday = new Intl.DateTimeFormat(undefined, { weekday: "short" });
+  var fMonthDay = new Intl.DateTimeFormat(undefined, { month: "short", day: "numeric" });
+  var fTime = new Intl.DateTimeFormat(undefined, { hour: "numeric", minute: "2-digit" });
+
+  /* ---------- state ---------- */
+  var state = null;
+  var filter = "all";
+  var hideDone = false;
+  var editingId = null;
+
+  function uid() { return Math.random().toString(36).slice(2, 10); }
+
+  function todayStr() {
+    var d = new Date();
+    return isoOf(d);
+  }
+  function isoOf(d) {
+    var m = String(d.getMonth() + 1).padStart(2, "0");
+    var day = String(d.getDate()).padStart(2, "0");
+    return d.getFullYear() + "-" + m + "-" + day;
+  }
+  function plusDays(n) {
+    var d = new Date();
+    d.setDate(d.getDate() + n);
+    return isoOf(d);
+  }
+  function dateOf(item) {
+    var p = String(item.date).split("-");
+    var t = String(item.time || "23:59").split(":");
+    return new Date(+p[0], +p[1] - 1, +p[2], +t[0] || 0, +t[1] || 0);
+  }
+  function dayIdx(dateStr) {
+    var p = String(dateStr).split("-");
+    return Math.round((new Date(+p[0], +p[1] - 1, +p[2]) - new Date(1970, 0, 1)) / 86400000);
+  }
+
+  function sampleState() {
+    return {
+      sample: true,
+      courses: [
+        { id: "c1", code: "BIO210", name: "Cell Biology", hue: "h1" },
+        { id: "c2", code: "HIST140", name: "Modern Europe", hue: "h2" }
+      ],
+      items: [
+        { id: "i1", courseId: "c1", kind: "prep", date: plusDays(1), time: "09:00",
+          title: "Lecture 8 — Membrane Transport",
+          prep: [
+            { t: "Reading", d: "Alberts ch. 11, pp. 597–620" },
+            { t: "Video", d: "Osmosis and tonicity walkthrough" },
+            { t: "Problem set", d: "Transport problem set, questions 1–6" }
+          ],
+          inClass: "Quiz 3 · case discussion" },
+        { id: "i2", courseId: "c2", kind: "due", date: plusDays(2), time: "23:59",
+          title: "Primary source response paper", points: 50 },
+        { id: "i3", courseId: "c1", kind: "due", date: plusDays(4), time: "09:00",
+          title: "Lab report — enzyme kinetics", points: 30 },
+        { id: "i4", courseId: "c2", kind: "prep", date: plusDays(6), time: "10:30",
+          title: "Seminar 5 — The Congress of Vienna",
+          prep: [
+            { t: "Reading", d: "Sked, ch. 2 and the Metternich excerpt" },
+            { t: "Notes", d: "Bring three discussion questions" }
+          ] },
+        { id: "i5", courseId: "c1", kind: "exam", date: plusDays(9), time: "09:00",
+          title: "Midterm 1", points: 100 }
+      ],
+      checked: {}
+    };
+  }
+
+  function load() {
+    try {
+      var raw = localStorage.getItem(LS_KEY);
+      if (raw) {
+        var s = JSON.parse(raw);
+        if (s && Array.isArray(s.courses) && Array.isArray(s.items)) {
+          s.checked = s.checked || {};
+          return s;
+        }
+      }
+    } catch (e) {}
+    return sampleState();
+  }
+
+  function save() {
+    try { localStorage.setItem(LS_KEY, JSON.stringify(state)); } catch (e) {}
+  }
+
+  state = load();
+
+  /* ---------- helpers ---------- */
+  function courseById(id) {
+    for (var i = 0; i < state.courses.length; i++) {
+      if (state.courses[i].id === id) return state.courses[i];
+    }
+    return null;
+  }
+  function hueVar(c) { return c ? "var(--" + c.hue + "c)" : "var(--line-2)"; }
+
+  function keysFor(item) {
+    if (item.prep && item.prep.length) {
+      return item.prep.map(function (_, i) { return item.id + ":" + i; });
+    }
+    return [item.id];
+  }
+  function isDone(item) {
+    return keysFor(item).every(function (k) { return !!state.checked[k]; });
+  }
+  function setDone(item, v) {
+    keysFor(item).forEach(function (k) {
+      if (v) state.checked[k] = true; else delete state.checked[k];
+    });
+  }
+
+  function safeUrl(u) {
+    if (!u) return "";
+    try {
+      var p = new URL(u, window.location.href);
+      return (p.protocol === "http:" || p.protocol === "https:") ? p.href : "";
+    } catch (e) { return ""; }
+  }
+
+  function relLabel(dateStr, today) {
+    var n = dayIdx(dateStr) - dayIdx(today);
+    if (n === 0) return "today";
+    if (n === 1) return "tomorrow";
+    if (n === -1) return "yesterday";
+    if (n < 0) return Math.abs(n) + " days ago";
+    return "in " + n + " days";
+  }
+  function countdown(d, now) {
+    var ms = d - now;
+    if (ms <= 0) return "past due";
+    var h = ms / 3600000;
+    if (h < 1) return Math.max(1, Math.round(ms / 60000)) + " min";
+    if (h < 24) { var hh = Math.round(h); return hh + (hh === 1 ? " hour" : " hours"); }
+    var days = Math.round(h / 24);
+    return days + (days === 1 ? " day" : " days");
+  }
+
+  function el(tag, cls, text) {
+    var n = document.createElement(tag);
+    if (cls) n.className = cls;
+    if (text != null) n.textContent = text;
+    return n;
+  }
+
+  /* ---------- render ---------- */
+  var stream = document.getElementById("stream");
+  var tiles = document.getElementById("tiles");
+  var controls = document.getElementById("controls");
+  var banner = document.getElementById("banner");
+
+  function render() {
+    banner.hidden = !state.sample;
+
+    var now = new Date();
+    var today = todayStr();
+
+    var rows = state.items.map(function (it) {
+      return { it: it, d: dateOf(it), done: isDone(it) };
+    }).sort(function (a, b) { return a.d - b.d; });
+
+    /* tiles */
+    var open = rows.filter(function (r) { return !r.done && r.d >= now; });
+    var next = open[0];
+    var weekEnd = now.getTime() + 7 * 86400000;
+    var week = open.filter(function (r) { return r.d.getTime() <= weekEnd; });
+    var pts = week.reduce(function (s, r) { return s + (Number(r.it.points) || 0); }, 0);
+
+    tiles.textContent = "";
+    tiles.appendChild(tile("Next up",
+      next ? countdown(next.d, now) : "All clear",
+      next ? next.it.title + " · " + fTime.format(next.d) : "Nothing outstanding ahead", true));
+    tiles.appendChild(tile("Next 7 days", String(week.length),
+      week.length === 1 ? "item to finish" : "items to finish", false));
+    tiles.appendChild(tile("Points at stake", pts ? String(pts) : "—",
+      "graded across those seven days", false));
+
+    /* progress */
+    var doneCount = rows.filter(function (r) { return r.done; }).length;
+    var pct = rows.length ? Math.round(doneCount / rows.length * 100) : 0;
+    document.getElementById("barfill").style.width = pct + "%";
+    document.getElementById("bartext").textContent = doneCount + " of " + rows.length + " done";
+
+    /* controls */
+    buildControls();
+
+    /* stream */
+    var visible = rows.filter(function (r) {
+      if (filter !== "all" && r.it.courseId !== filter) return false;
+      if (hideDone && r.done) return false;
+      return true;
+    });
+
+    stream.textContent = "";
+    if (!visible.length) {
+      stream.appendChild(emptyState(rows.length));
+      return;
+    }
+
+    var groups = [], byKey = {};
+    visible.forEach(function (r) {
+      var k = r.it.date;
+      if (!byKey[k]) { byKey[k] = { key: k, d: r.d, rows: [] }; groups.push(byKey[k]); }
+      byKey[k].rows.push(r);
+    });
+    groups.forEach(function (g) { stream.appendChild(dayBand(g, today)); });
+  }
+
+  function emptyState(total) {
+    var e = el("div", "empty");
+    if (!state.items.length) {
+      e.appendChild(el("p", null, state.courses.length
+        ? "No items yet. Add your first deadline or prep packet."
+        : "Start by adding a course, then your first deadline."));
+      var b = el("button", "btn btn-primary", state.courses.length ? "Add item" : "Add a course");
+      b.type = "button";
+      b.addEventListener("click", function () {
+        if (state.courses.length) openItem(null); else document.getElementById("dlg-courses").showModal();
+      });
+      e.appendChild(b);
+    } else if (hideDone && total) {
+      e.appendChild(el("p", null, "Nothing left here — everything in this filter is checked off."));
+    } else {
+      e.appendChild(el("p", null, "No items for this course."));
+    }
+    return e;
+  }
+
+  function tile(label, value, note, lead) {
+    var n = el("div", "tile" + (lead ? " lead" : ""));
+    n.appendChild(el("div", "tile-label", label));
+    n.appendChild(el("div", "tile-value", value));
+    n.appendChild(el("div", "tile-note", note));
+    return n;
+  }
+
+  function buildControls() {
+    controls.textContent = "";
+    var opts = [{ k: "all", label: "All", hue: null }];
+    state.courses.forEach(function (c) { opts.push({ k: c.id, label: c.code || c.name, hue: c }); });
+
+    opts.forEach(function (o) {
+      var b = el("button", "chip", o.label);
+      b.type = "button";
+      b.setAttribute("aria-pressed", String(filter === o.k));
+      if (o.hue) {
+        b.dataset.hue = "1";
+        if (filter === o.k) {
+          b.style.background = hueVar(o.hue);
+          b.style.borderColor = hueVar(o.hue);
+        }
+      }
+      b.addEventListener("click", function () { filter = o.k; render(); });
+      controls.appendChild(b);
+    });
+
+    controls.appendChild(el("div", "spacer"));
+
+    var lab = el("label", "toggle");
+    var inp = document.createElement("input");
+    inp.type = "checkbox";
+    inp.id = "hide-done";
+    inp.setAttribute("aria-label", "Hide finished items");
+    inp.checked = hideDone;
+    inp.addEventListener("change", function () { hideDone = inp.checked; render(); });
+    lab.appendChild(inp);
+    lab.appendChild(el("span", "box sm"));
+    lab.appendChild(el("span", null, "Hide finished"));
+    controls.appendChild(lab);
+  }
+
+  function dayBand(g, today) {
+    var sec = el("section", "day");
+    var diff = dayIdx(g.key) - dayIdx(today);
+    if (diff <= 2 && diff >= 0) sec.classList.add("is-urgent");
+    if (diff < 0) sec.classList.add("is-past");
+
+    var rail = el("div", "day-rail");
+    var inner = el("div", "day-rail-in");
+    inner.appendChild(el("div", "rail-weekday", fWeekday.format(g.d)));
+    inner.appendChild(el("div", "rail-date", fMonthDay.format(g.d)));
+    inner.appendChild(el("div", "rail-rel", relLabel(g.key, today)));
+    rail.appendChild(inner);
+
+    var list = el("div", "day-items");
+    g.rows.forEach(function (r) { list.appendChild(card(r)); });
+
+    sec.appendChild(rail);
+    sec.appendChild(list);
+    return sec;
+  }
+
+  function card(r) {
+    var it = r.it;
+    var course = courseById(it.courseId);
+    var art = el("article", "item");
+    art.style.setProperty("--hue", hueVar(course));
+    art.dataset.done = String(r.done);
+
+    art.appendChild(el("div", "stripe"));
+    var body = el("div", "item-body");
+    var top = el("div", "item-top");
+
+    var hasPrep = it.prep && it.prep.length;
+    var lab = el("label", "check");
+    lab.title = hasPrep ? "Mark all prep done" : "Mark done";
+    var inp = document.createElement("input");
+    inp.type = "checkbox";
+    inp.id = "chk-" + it.id;
+    inp.setAttribute("aria-label", (hasPrep ? "Mark all prep done for " : "Mark done: ") + it.title);
+    inp.checked = r.done;
+    inp.addEventListener("change", function () {
+      setDone(it, inp.checked); save(); render();
+    });
+    lab.appendChild(inp);
+    lab.appendChild(el("span", "box"));
+
+    var head = el("div", "item-head");
+    var eye = el("div", "eyebrow");
+    if (course) eye.appendChild(el("span", "course-tag", course.code || course.name));
+    eye.appendChild(el("span", "kind k-" + it.kind, KIND_LABEL[it.kind] || "Due"));
+    eye.appendChild(el("span", "clock", fTime.format(r.d)));
+    head.appendChild(eye);
+
+    var h3 = el("h3", "item-title");
+    var href = safeUrl(it.url);
+    if (href) {
+      var a = el("a", null, it.title);
+      a.href = href; a.target = "_blank"; a.rel = "noopener noreferrer";
+      h3.appendChild(a);
+    } else {
+      h3.textContent = it.title;
+    }
+    head.appendChild(h3);
+
+    top.appendChild(lab);
+    top.appendChild(head);
+
+    var side = el("div", "item-side");
+    if (Number(it.points)) side.appendChild(el("span", "pts", Number(it.points) + " pts"));
+    var edit = el("button", "edit", "✎");
+    edit.type = "button";
+    edit.title = "Edit";
+    edit.setAttribute("aria-label", "Edit " + it.title);
+    edit.addEventListener("click", function () { openItem(it.id); });
+    side.appendChild(edit);
+    top.appendChild(side);
+
+    body.appendChild(top);
+
+    if (it.prep && it.prep.length) {
+      var ul = el("ul", "prep");
+      it.prep.forEach(function (p, i) {
+        var key = it.id + ":" + i;
+        var li = document.createElement("li");
+        var l2 = document.createElement("label");
+        var i2 = document.createElement("input");
+        i2.type = "checkbox";
+        i2.id = "chk-" + key;
+        i2.setAttribute("aria-label", (p.t || "Prep") + ": " + (p.d || ""));
+        i2.checked = !!state.checked[key];
+        i2.addEventListener("change", function () {
+          if (i2.checked) state.checked[key] = true; else delete state.checked[key];
+          save(); render();
+        });
+        l2.appendChild(i2);
+        l2.appendChild(el("span", "box sm"));
+        l2.appendChild(el("span", "prep-type", p.t || "Prep"));
+        l2.appendChild(el("span", "prep-text", p.d || ""));
+        li.appendChild(l2);
+        ul.appendChild(li);
+      });
+      body.appendChild(ul);
+    }
+
+    if (it.inClass) {
+      var p3 = el("p", "inclass");
+      var b3 = el("b", null, "In class ");
+      p3.appendChild(b3);
+      p3.appendChild(document.createTextNode(it.inClass));
+      body.appendChild(p3);
+    }
+
+    art.appendChild(body);
+    return art;
+  }
+
+  /* ---------- item dialog ---------- */
+  var dlgItem = document.getElementById("dlg-item");
+  var prepRows = document.getElementById("prep-rows");
+  var itemErr = document.getElementById("item-err");
+
+  var dl = document.createElement("datalist");
+  dl.id = "prep-types";
+  PREP_SUGGESTIONS.forEach(function (s) {
+    var o = document.createElement("option");
+    o.value = s;
+    dl.appendChild(o);
+  });
+  document.body.appendChild(dl);
+
+  function prepRow(t, d) {
+    var row = el("div", "prep-row");
+    var a = document.createElement("input");
+    a.type = "text"; a.placeholder = "Reading"; a.value = t || ""; a.maxLength = 24;
+    a.setAttribute("list", "prep-types");
+    a.setAttribute("aria-label", "Prep step type");
+    var b = document.createElement("input");
+    b.type = "text"; b.placeholder = "Ch. 4, pp. 100–118"; b.value = d || ""; b.maxLength = 200;
+    b.setAttribute("aria-label", "Prep step description");
+    var x = el("button", "x", "×");
+    x.type = "button";
+    x.title = "Remove";
+    x.setAttribute("aria-label", "Remove prep step");
+    x.addEventListener("click", function () { row.remove(); });
+    row.appendChild(a); row.appendChild(b); row.appendChild(x);
+    return row;
+  }
+
+  function openItem(id) {
+    editingId = id;
+    var it = null;
+    if (id) {
+      for (var i = 0; i < state.items.length; i++) if (state.items[i].id === id) it = state.items[i];
+    }
+    if (!state.courses.length) {
+      document.getElementById("dlg-courses").showModal();
+      return;
+    }
+
+    document.getElementById("item-dlg-title").textContent = it ? "Edit item" : "Add item";
+    itemErr.hidden = true;
+
+    var sel = document.getElementById("f-course");
+    sel.textContent = "";
+    state.courses.forEach(function (c) {
+      var o = document.createElement("option");
+      o.value = c.id;
+      o.textContent = (c.code ? c.code + " — " : "") + c.name;
+      sel.appendChild(o);
+    });
+
+    document.getElementById("f-title").value = it ? it.title : "";
+    sel.value = it ? it.courseId : (filter !== "all" ? filter : state.courses[0].id);
+    document.getElementById("f-kind").value = it ? it.kind : "prep";
+    document.getElementById("f-date").value = it ? it.date : todayStr();
+    document.getElementById("f-time").value = it ? (it.time || "08:00") : "08:00";
+    document.getElementById("f-points").value = it && it.points ? it.points : "";
+    document.getElementById("f-url").value = it && it.url ? it.url : "";
+    document.getElementById("f-inclass").value = it && it.inClass ? it.inClass : "";
+
+    prepRows.textContent = "";
+    if (it && it.prep && it.prep.length) {
+      it.prep.forEach(function (p) { prepRows.appendChild(prepRow(p.t, p.d)); });
+    }
+
+    document.getElementById("btn-delete-item").hidden = !it;
+    dlgItem.showModal();
+    document.getElementById("f-title").focus();
+  }
+
+  document.getElementById("btn-add-prep").addEventListener("click", function () {
+    prepRows.appendChild(prepRow("", ""));
+    var inputs = prepRows.querySelectorAll(".prep-row input");
+    if (inputs.length) inputs[inputs.length - 2].focus();
+  });
+
+  document.getElementById("btn-save-item").addEventListener("click", function () {
+    var title = document.getElementById("f-title").value.trim();
+    var date = document.getElementById("f-date").value;
+    if (!title) { showErr("Give it a name so you recognise it later."); return; }
+    if (!date) { showErr("Pick a date — that's what puts it on the timeline."); return; }
+
+    var prep = [];
+    prepRows.querySelectorAll(".prep-row").forEach(function (row) {
+      var ins = row.querySelectorAll("input");
+      var t = ins[0].value.trim(), d = ins[1].value.trim();
+      if (d) prep.push({ t: t || "Prep", d: d });
+    });
+
+    var payload = {
+      courseId: document.getElementById("f-course").value,
+      kind: document.getElementById("f-kind").value,
+      date: date,
+      time: document.getElementById("f-time").value || "23:59",
+      title: title,
+      points: Number(document.getElementById("f-points").value) || 0,
+      url: document.getElementById("f-url").value.trim(),
+      inClass: document.getElementById("f-inclass").value.trim(),
+      prep: prep
+    };
+
+    if (editingId) {
+      for (var i = 0; i < state.items.length; i++) {
+        if (state.items[i].id === editingId) {
+          var old = state.items[i];
+          /* prep count changed — drop stale sub-task ticks */
+          if (!old.prep || old.prep.length !== prep.length) {
+            keysFor(old).forEach(function (k) { delete state.checked[k]; });
+          }
+          payload.id = editingId;
+          state.items[i] = payload;
+        }
+      }
+    } else {
+      payload.id = uid();
+      state.items.push(payload);
+    }
+
+    state.sample = false;
+    save();
+    dlgItem.close();
+    render();
+  });
+
+  function showErr(msg) {
+    itemErr.textContent = msg;
+    itemErr.hidden = false;
+  }
+
+  document.getElementById("btn-delete-item").addEventListener("click", function () {
+    if (!editingId) return;
+    state.items = state.items.filter(function (i) {
+      if (i.id === editingId) {
+        keysFor(i).forEach(function (k) { delete state.checked[k]; });
+        return false;
+      }
+      return true;
+    });
+    save();
+    dlgItem.close();
+    render();
+  });
+
+  document.getElementById("btn-add").addEventListener("click", function () { openItem(null); });
+
+  /* ---------- courses dialog ---------- */
+  var dlgCourses = document.getElementById("dlg-courses");
+  var courseErr = document.getElementById("course-err");
+  var pickedHue = HUES[0];
+
+  function buildHuePicker() {
+    var wrap = document.getElementById("hue-picker");
+    wrap.textContent = "";
+    HUES.forEach(function (h) {
+      var b = el("button", "hue-dot");
+      b.type = "button";
+      b.style.setProperty("--hue", "var(--" + h + "c)");
+      b.setAttribute("aria-pressed", String(pickedHue === h));
+      b.setAttribute("aria-label", "Colour " + (HUES.indexOf(h) + 1));
+      b.addEventListener("click", function () { pickedHue = h; buildHuePicker(); });
+      wrap.appendChild(b);
+    });
+  }
+
+  function buildCourseList() {
+    var list = document.getElementById("course-list");
+    list.textContent = "";
+    if (!state.courses.length) {
+      list.appendChild(el("p", "hint", "No courses yet. Add one below."));
+      return;
+    }
+    state.courses.forEach(function (c) {
+      var row = el("div", "course-row");
+      var sw = el("span", "swatch");
+      sw.style.setProperty("--hue", hueVar(c));
+      row.appendChild(sw);
+      row.appendChild(el("span", "code", c.code || ""));
+      row.appendChild(el("span", "name", c.name));
+      var count = state.items.filter(function (i) { return i.courseId === c.id; }).length;
+      row.appendChild(el("span", "hint", count + (count === 1 ? " item" : " items")));
+      var x = el("button", "x", "×");
+      x.type = "button";
+      x.title = "Remove course";
+      x.setAttribute("aria-label", "Remove " + c.name);
+      x.addEventListener("click", function () {
+        var n = state.items.filter(function (i) { return i.courseId === c.id; }).length;
+        if (n && !window.confirm("Remove " + (c.code || c.name) + " and its " + n + " item" + (n === 1 ? "" : "s") + "?")) return;
+        state.items = state.items.filter(function (i) {
+          if (i.courseId === c.id) { keysFor(i).forEach(function (k) { delete state.checked[k]; }); return false; }
+          return true;
+        });
+        state.courses = state.courses.filter(function (x2) { return x2.id !== c.id; });
+        if (filter === c.id) filter = "all";
+        save(); buildCourseList(); render();
+      });
+      row.appendChild(x);
+      list.appendChild(row);
+    });
+  }
+
+  document.getElementById("btn-add-course").addEventListener("click", function () {
+    var code = document.getElementById("f-ccode").value.trim();
+    var name = document.getElementById("f-cname").value.trim();
+    if (!name && !code) {
+      courseErr.textContent = "Give the course a name or a short code.";
+      courseErr.hidden = false;
+      return;
+    }
+    courseErr.hidden = true;
+    state.courses.push({ id: uid(), code: code, name: name || code, hue: pickedHue });
+    document.getElementById("f-ccode").value = "";
+    document.getElementById("f-cname").value = "";
+    pickedHue = HUES[state.courses.length % HUES.length];
+    buildHuePicker();
+    save(); buildCourseList(); render();
+  });
+
+  document.getElementById("btn-courses").addEventListener("click", function () {
+    courseErr.hidden = true;
+    buildCourseList();
+    buildHuePicker();
+    dlgCourses.showModal();
+  });
+
+  /* ---------- one-click Canvas import (via the bookmarklet) ---------- */
+
+  var PREP_PATTERNS = [
+    [/^(?:required\s+)?readings?\s*[:\-]/i, "Reading"],
+    [/^videos?\s*[:\-]/i, "Video"],
+    /* "View 4 videos:", "Required Brainshark Video", "Watch the video" */
+    [/^(?:view|watch|required)\b[^:\n]{0,24}videos?\b/i, "Video"],
+    [/^(?:problem\s+sets?|assignments?(?:\s+to\s+be\s+prepared[^:]*)?)\s*[:\-]/i, "Problem set"],
+    [/^(?:prepare|complete|bring|review)\b/i, "Prepare"],
+    [/^(?:notes?|case)\s*[:\-]/i, "Notes"]
+  ];
+
+  var PREP_START = /for\s+class[,\s]*prepare|prepare\s+the\s+following|before\s+class|to\s+prepare/i;
+  var INCLASS_START = /^in[\s\-]?class\b/i;
+
+  /* Prep pages are free-form HTML a professor wrote, so this reads the shape most
+     of them share: a "prepare the following" run, then an "in class" run. */
+  function parsePrepBody(text) {
+    if (!text) return { prep: [], inClass: "" };
+    var lines = String(text).split("\n").map(function (l) { return l.trim(); })
+      .filter(function (l) { return l && l.length < 400; });
+
+    var prep = [], inClass = [], mode = "";
+    var lastType = null;
+
+    lines.forEach(function (line) {
+      if (INCLASS_START.test(line)) {
+        mode = "in";
+        var rest = line.replace(/^in[\s\-]?class\s*[:\-]?\s*/i, "").trim();
+        if (rest) inClass.push(rest);
+        return;
+      }
+      if (/^learning\s+objectives?/i.test(line)) { mode = ""; return; }
+      /* Only treat "…before class:" as a section header while we're still
+         outside the prep run — inside it, such a line is a step of its own. */
+      if (mode !== "prep" && PREP_START.test(line)) { mode = "prep"; lastType = null; return; }
+
+      if (mode === "in") { inClass.push(line); return; }
+      if (mode !== "prep") return;
+
+      for (var i = 0; i < PREP_PATTERNS.length; i++) {
+        if (PREP_PATTERNS[i][0].test(line)) {
+          var label = PREP_PATTERNS[i][1];
+          /* "Assignments:" on its own is a heading — leave it empty and let the
+             line below become its text. */
+          prep.push({ t: label, d: line.replace(/^[^:\-]{0,40}[:\-]\s*/, "").trim() });
+          lastType = label;
+          return;
+        }
+      }
+      /* A bare continuation line belongs to the step above it. */
+      if (lastType && prep.length) {
+        var last = prep[prep.length - 1];
+        last.d = last.d ? last.d + " · " + line : line;
+      } else {
+        prep.push({ t: "Prepare", d: line });
+        lastType = "Prepare";
+      }
+    });
+
+    return {
+      prep: prep.filter(function (p) { return p.d; }).slice(0, 8).map(function (p) {
+        return { t: p.t, d: p.d.replace(/\s{2,}/g, " ").slice(0, 200) };
+      }),
+      inClass: inClass.join(" · ").slice(0, 240)
+    };
+  }
+
+  function kindFor(title, type) {
+    if (type === "wiki_page") return "prep";
+    if (/\b(midterm|final)\b|\bexam\b/i.test(title)) return "exam";
+    if (/during class|in[\s-]?class/i.test(title)) return "live";
+    return "due";
+  }
+
+  function importPayload(payload) {
+    if (!payload || !Array.isArray(payload.items)) throw new Error("bad payload");
+
+    if (state.sample) {
+      state = { sample: false, courses: [], items: [], checked: {} };
+      filter = "all";
+    }
+
+    var courseNames = {};
+    (payload.courses || []).forEach(function (c) { courseNames[c.id] = c; });
+
+    var byCode = {};
+    state.courses.forEach(function (c) { byCode[(c.code || "").toUpperCase()] = c; });
+    var byExt = {};
+    state.items.forEach(function (i) { if (i.ext) byExt[i.ext] = i; });
+
+    var added = 0, updated = 0, madeCourses = 0, withPrep = 0;
+
+    payload.items.forEach(function (raw) {
+      if (!raw.title || !raw.date) return;
+      var d = new Date(raw.date);
+      if (isNaN(d)) return;
+
+      var meta = courseNames[raw.courseId] || {};
+      var code = shortCode(meta.code || meta.name || "CANVAS");
+      var course = byCode[code];
+      if (!course) {
+        course = {
+          id: uid(), code: code,
+          name: (meta.name || "Canvas").replace(/^\d{4}[A-Z]-\d+:/i, "").trim() || code,
+          hue: HUES[state.courses.length % HUES.length]
+        };
+        state.courses.push(course);
+        byCode[code] = course;
+        madeCourses++;
+      }
+
+      var parsed = raw.type === "wiki_page" ? parsePrepBody(raw.body) : { prep: [], inClass: "" };
+      if (parsed.prep.length) withPrep++;
+
+      var fields = {
+        courseId: course.id,
+        kind: kindFor(raw.title, raw.type),
+        date: d.getFullYear() + "-" + pad2(d.getMonth() + 1) + "-" + pad2(d.getDate()),
+        time: pad2(d.getHours()) + ":" + pad2(d.getMinutes()),
+        title: raw.title,
+        points: Number(raw.points) || 0,
+        url: raw.url || "",
+        ext: raw.ext || ""
+      };
+
+      var existing = fields.ext ? byExt[fields.ext] : null;
+      if (existing) {
+        existing.title = fields.title;
+        existing.date = fields.date;
+        existing.time = fields.time;
+        existing.points = fields.points || existing.points;
+        existing.url = fields.url || existing.url;
+        /* Only fill prep in if the student hasn't written their own. */
+        if (parsed.prep.length && !(existing.prep && existing.prep.length)) {
+          existing.prep = parsed.prep;
+        }
+        if (parsed.inClass && !existing.inClass) existing.inClass = parsed.inClass;
+        updated++;
+      } else {
+        fields.id = uid();
+        fields.prep = parsed.prep;
+        fields.inClass = parsed.inClass;
+        state.items.push(fields);
+        if (fields.ext) byExt[fields.ext] = fields;
+        added++;
+      }
+    });
+
+    save();
+    render();
+    return { added: added, updated: updated, courses: madeCourses, withPrep: withPrep };
+  }
+
+  function b64decode(s) {
+    var bin = atob(s);
+    var bytes = new Uint8Array(bin.length);
+    for (var i = 0; i < bin.length; i++) bytes[i] = bin.charCodeAt(i);
+    return new TextDecoder().decode(bytes);
+  }
+
+  /* The bookmarklet hands data over in the URL fragment, which never leaves the
+     browser — the assignments are not sent to whoever hosts this page. */
+  function consumeHashImport() {
+    var h = location.hash || "";
+    var m = h.match(/[#&]import=([A-Za-z0-9+/=]+)/);
+    if (!m) return;
+    history.replaceState(null, "", location.pathname + location.search);
+    var res;
+    try {
+      res = importPayload(JSON.parse(b64decode(m[1])));
+    } catch (e) {
+      importErr.textContent = "That import link couldn't be read. Run the bookmarklet from Canvas again.";
+      importErr.hidden = false;
+      dlgImport.showModal();
+      return;
+    }
+    var parts = [];
+    if (res.added) parts.push(res.added + (res.added === 1 ? " item added" : " items added"));
+    if (res.updated) parts.push(res.updated + " updated");
+    if (res.courses) parts.push(res.courses + (res.courses === 1 ? " course" : " courses"));
+    if (res.withPrep) parts.push(res.withPrep + " with prep steps");
+    importOk.textContent = "Imported from Canvas: " + (parts.join(", ") || "nothing new") + ".";
+    importOk.hidden = false;
+    dlgImport.showModal();
+  }
+
+  /* ---------- Canvas .ics import ---------- */
+  var dlgImport = document.getElementById("dlg-import");
+  var importErr = document.getElementById("import-err");
+  var importOk = document.getElementById("import-ok");
+
+  function unesc(s) {
+    return String(s).replace(/\\n/gi, "\n").replace(/\\,/g, ",")
+      .replace(/\\;/g, ";").replace(/\\\\/g, "\\");
+  }
+
+  function parseICS(text) {
+    /* RFC 5545 line folding: a CRLF followed by a space or tab continues the line. */
+    var lines = String(text).replace(/\r\n/g, "\n").replace(/\r/g, "\n")
+      .replace(/\n[ \t]/g, "").split("\n");
+    var events = [], cur = null;
+    lines.forEach(function (line) {
+      if (line === "BEGIN:VEVENT") { cur = {}; return; }
+      if (line === "END:VEVENT") { if (cur) events.push(cur); cur = null; return; }
+      if (!cur) return;
+      var c = line.indexOf(":");
+      if (c < 0) return;
+      var key = line.slice(0, c), val = line.slice(c + 1);
+      var bits = key.split(";");
+      cur[bits[0].toUpperCase()] = { v: val };
+    });
+    return events;
+  }
+
+  function icsDate(field) {
+    if (!field) return null;
+    var m = String(field.v).trim()
+      .match(/^(\d{4})(\d{2})(\d{2})(?:T(\d{2})(\d{2})(\d{2})(Z)?)?$/);
+    if (!m) return null;
+    var y = +m[1], mo = +m[2], d = +m[3];
+    if (!m[4]) return { d: new Date(y, mo - 1, d), allDay: true };
+    var hh = +m[4], mi = +m[5], ss = +m[6];
+    if (m[7] === "Z") return { d: new Date(Date.UTC(y, mo - 1, d, hh, mi, ss)), allDay: false };
+    return { d: new Date(y, mo - 1, d, hh, mi, ss), allDay: false };
+  }
+
+  function shortCode(raw) {
+    var m = String(raw).match(/([A-Za-z]{2,5})[\s\-_]?(\d{3,4})/);
+    return m ? (m[1] + m[2]).toUpperCase() : String(raw).slice(0, 12);
+  }
+
+  function pad2(n) { return String(n).padStart(2, "0"); }
+
+  function runImport(text) {
+    importErr.hidden = true;
+    importOk.hidden = true;
+
+    var events;
+    try { events = parseICS(text); } catch (e) { events = []; }
+    if (!events.length) {
+      importErr.textContent = "No calendar events found in that file. Make sure it's the .ics your Canvas calendar feed downloads.";
+      importErr.hidden = false;
+      return;
+    }
+
+    /* A first import replaces the sample data rather than mixing with it. */
+    if (state.sample) {
+      state = { sample: false, courses: [], items: [], checked: {} };
+      filter = "all";
+    }
+
+    var byCode = {};
+    state.courses.forEach(function (c) { byCode[(c.code || "").toUpperCase()] = c; });
+    var byExt = {};
+    state.items.forEach(function (i) { if (i.ext) byExt[i.ext] = i; });
+
+    var added = 0, updated = 0, courses = 0, skipped = 0;
+
+    events.forEach(function (ev) {
+      if (!ev.SUMMARY || !ev.DTSTART) { skipped++; return; }
+      var when = icsDate(ev.DTSTART);
+      if (!when) { skipped++; return; }
+
+      var summary = unesc(ev.SUMMARY.v).trim();
+      var title = summary, rawCode = "";
+      var m = summary.match(/^([\s\S]*?)\s*\[([^\]]+)\]\s*$/);
+      if (m) { title = m[1].trim(); rawCode = m[2].trim(); }
+      if (!title) { skipped++; return; }
+
+      var code = rawCode ? shortCode(rawCode) : "CANVAS";
+      var course = byCode[code];
+      if (!course) {
+        course = { id: uid(), code: code, name: rawCode || "Canvas", hue: HUES[state.courses.length % HUES.length] };
+        state.courses.push(course);
+        byCode[code] = course;
+        courses++;
+      }
+
+      var d = when.d;
+      var payload = {
+        courseId: course.id,
+        kind: "due",
+        date: d.getFullYear() + "-" + pad2(d.getMonth() + 1) + "-" + pad2(d.getDate()),
+        time: when.allDay ? "23:59" : pad2(d.getHours()) + ":" + pad2(d.getMinutes()),
+        title: title,
+        url: ev.URL ? unesc(ev.URL.v).trim() : "",
+        ext: ev.UID ? unesc(ev.UID.v).trim() : ""
+      };
+
+      var existing = payload.ext ? byExt[payload.ext] : null;
+      if (existing) {
+        /* Keep what the student added by hand; refresh only what Canvas owns. */
+        existing.title = payload.title;
+        existing.date = payload.date;
+        existing.time = payload.time;
+        existing.url = payload.url || existing.url;
+        updated++;
+      } else {
+        payload.id = uid();
+        payload.points = 0;
+        payload.inClass = "";
+        payload.prep = [];
+        state.items.push(payload);
+        if (payload.ext) byExt[payload.ext] = payload;
+        added++;
+      }
+    });
+
+    if (!added && !updated) {
+      importErr.textContent = "Found " + events.length + " events but none had a usable title and date.";
+      importErr.hidden = false;
+      return;
+    }
+
+    save();
+    render();
+
+    var parts = [];
+    if (added) parts.push(added + (added === 1 ? " item added" : " items added"));
+    if (updated) parts.push(updated + " updated");
+    if (courses) parts.push(courses + (courses === 1 ? " course created" : " courses created"));
+    if (skipped) parts.push(skipped + " skipped");
+    importOk.textContent = "Imported: " + parts.join(", ") + ".";
+    importOk.hidden = false;
+  }
+
+  function readFile(file) {
+    if (!file) return;
+    var reader = new FileReader();
+    reader.onload = function () { runImport(reader.result); };
+    reader.onerror = function () {
+      importErr.textContent = "Couldn't read that file.";
+      importErr.hidden = false;
+    };
+    reader.readAsText(file);
+  }
+
+  var drop = document.getElementById("drop");
+  var fileInput = document.getElementById("f-file");
+
+  document.getElementById("btn-pick").addEventListener("click", function () { fileInput.click(); });
+  fileInput.addEventListener("change", function () { readFile(fileInput.files[0]); fileInput.value = ""; });
+
+  ["dragenter", "dragover"].forEach(function (evt) {
+    drop.addEventListener(evt, function (e) { e.preventDefault(); drop.classList.add("over"); });
+  });
+  ["dragleave", "drop"].forEach(function (evt) {
+    drop.addEventListener(evt, function (e) { e.preventDefault(); drop.classList.remove("over"); });
+  });
+  drop.addEventListener("drop", function (e) {
+    if (e.dataTransfer && e.dataTransfer.files && e.dataTransfer.files.length) readFile(e.dataTransfer.files[0]);
+  });
+
+  document.getElementById("btn-parse-paste").addEventListener("click", function () {
+    var t = document.getElementById("f-ics").value.trim();
+    if (!t) {
+      importErr.textContent = "Paste the contents of the .ics file first.";
+      importErr.hidden = false;
+      return;
+    }
+    runImport(t);
+  });
+
+  document.getElementById("btn-import").addEventListener("click", function () {
+    importErr.hidden = true;
+    importOk.hidden = true;
+    dlgImport.showModal();
+  });
+
+  /* ---------- backup dialog ---------- */
+  var dlgBackup = document.getElementById("dlg-backup");
+  var backupHint = document.getElementById("backup-hint");
+  var DEFAULT_HINT = backupHint.textContent;
+
+  document.getElementById("btn-backup").addEventListener("click", function () {
+    document.getElementById("f-backup").value = JSON.stringify(state);
+    backupHint.textContent = DEFAULT_HINT;
+    dlgBackup.showModal();
+  });
+
+  document.getElementById("btn-copy").addEventListener("click", function () {
+    var ta = document.getElementById("f-backup");
+    ta.select();
+    var ok = false;
+    try { ok = document.execCommand("copy"); } catch (e) {}
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(ta.value).then(function () {
+        backupHint.textContent = "Copied.";
+      }, function () {
+        backupHint.textContent = ok ? "Copied." : "Couldn't copy automatically — select the text and copy it yourself.";
+      });
+    } else {
+      backupHint.textContent = ok ? "Copied." : "Select the text and copy it yourself.";
+    }
+  });
+
+  document.getElementById("btn-restore").addEventListener("click", function () {
+    var txt = document.getElementById("f-backup").value.trim();
+    var parsed;
+    try { parsed = JSON.parse(txt); } catch (e) {
+      backupHint.textContent = "That isn't a valid backup — paste the whole block of text.";
+      return;
+    }
+    if (!parsed || !Array.isArray(parsed.courses) || !Array.isArray(parsed.items)) {
+      backupHint.textContent = "That backup is missing its courses or items.";
+      return;
+    }
+    if (!window.confirm("Replace everything currently in this browser with the pasted backup?")) return;
+    parsed.checked = parsed.checked || {};
+    state = parsed;
+    filter = "all";
+    save();
+    dlgBackup.close();
+    render();
+  });
+
+  /* ---------- sample data ---------- */
+  document.getElementById("btn-clear-sample").addEventListener("click", function () {
+    if (!window.confirm("Clear the sample courses and items?")) return;
+    state = { sample: false, courses: [], items: [], checked: {} };
+    filter = "all";
+    save();
+    render();
+  });
+
+  /* ---------- dialog plumbing ---------- */
+  document.querySelectorAll("[data-close]").forEach(function (b) {
+    b.addEventListener("click", function () {
+      var d = b.closest("dialog");
+      if (d) d.close();
+    });
+  });
+  document.getElementById("form-item").addEventListener("submit", function (e) { e.preventDefault(); });
+
+  /* The bookmarklet is built from its own file so improving it never means
+     asking anyone to re-drag the bookmark. Absent (e.g. opened as a bare file),
+     the section stays hidden and the calendar import still works. */
+  (function wireBookmarklet() {
+    var link = document.getElementById("bm-link");
+    if (!link) return;
+    fetch("bookmarklet.js")
+      .then(function (r) { return r.ok ? r.text() : Promise.reject(new Error("missing")); })
+      .then(function (src) {
+        link.href = "javascript:" + encodeURIComponent(src);
+        document.getElementById("opt-bm").hidden = false;
+        link.addEventListener("click", function (e) {
+          e.preventDefault();
+          importErr.textContent = "Drag this button up to your bookmarks bar rather than clicking it — it has to run on your Canvas tab.";
+          importErr.hidden = false;
+        });
+      })
+      .catch(function () { /* leave the section hidden */ });
+  })();
+
+  render();
+  consumeHashImport();
+})();
+</script>
+<script>
+  if ("serviceWorker" in navigator && location.protocol === "https:") {
+    addEventListener("load", function () {
+      navigator.serviceWorker.register("sw.js").catch(function () {});
+    });
+  }
+</script>
+</body>
+</html>
