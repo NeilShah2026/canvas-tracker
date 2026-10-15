@@ -151,7 +151,7 @@
   .btn-ghost:hover { border-color: var(--line-2); }
 
   /* ---- hero ---- */
-  .hero { padding-block: 32px 18px; }
+  .hero { padding-block: 32px 14px; }
   .kicker {
     font-family: var(--mono); font-size: 11px; font-weight: 500; letter-spacing: .14em;
     text-transform: uppercase; color: var(--ink-3); margin: 0 0 10px;
@@ -419,6 +419,77 @@
   .hue-dot[aria-pressed="true"] { border-color: var(--ink); }
   .hue-dot:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
 
+  /* ---- view tabs ---- */
+  .tabs {
+    display: inline-flex; gap: 2px; padding: 3px; margin-block: 4px 0;
+    background: var(--surface-2); border-radius: 9px;
+  }
+  .tab {
+    font-family: var(--mono); font-size: 12px; font-weight: 500; letter-spacing: .02em;
+    border: none; background: transparent; color: var(--ink-2);
+    border-radius: 7px; padding: 6px 16px; cursor: pointer;
+  }
+  .tab:hover { color: var(--ink); }
+  .tab:focus-visible { outline: 2px solid var(--accent); outline-offset: 1px; }
+  .tab[aria-selected="true"] { background: var(--surface); color: var(--ink); box-shadow: var(--shadow); }
+
+  /* ---- grades ---- */
+  .synced { font-family: var(--mono); font-size: 11.5px; color: var(--ink-3); margin: -8px 0 18px; }
+  .grade-list { display: flex; flex-direction: column; gap: 12px; }
+  .gcard {
+    display: grid; grid-template-columns: 4px 1fr; overflow: hidden;
+    background: var(--surface); border: 1px solid var(--line); border-radius: 10px;
+  }
+  .gcard-body { padding: 14px 16px; min-width: 0; }
+  .gcard-top { display: flex; gap: 14px; align-items: flex-start; }
+  .gcard-head { flex: 1; min-width: 0; }
+  .gcard-name {
+    font-family: var(--display); font-weight: 500; font-size: 16px; line-height: 1.25;
+    letter-spacing: -.012em; margin: 0; overflow-wrap: anywhere;
+  }
+  .gcard-meta { font-size: 12.5px; color: var(--ink-2); margin-top: 3px; }
+  .gcard-meta .bad { color: var(--urgent); font-weight: 500; }
+  .gscore { text-align: right; flex: none; }
+  .gscore-pct {
+    font-family: var(--display); font-weight: 700; font-size: 26px; line-height: 1;
+    letter-spacing: -.02em; font-variant-numeric: tabular-nums;
+  }
+  .gscore-pct.low { color: var(--urgent); }
+  .gscore-letter { font-family: var(--mono); font-size: 11.5px; color: var(--ink-2); margin-top: 4px; }
+  .gcard .bar { margin-top: 12px; }
+  .gcard .bar span { background: var(--hue, var(--accent)); }
+  .gdetails { margin-top: 12px; border-top: 1px solid var(--line); padding-top: 10px; }
+  .gdetails summary {
+    cursor: pointer; font-family: var(--mono); font-size: 11px;
+    letter-spacing: .08em; text-transform: uppercase; color: var(--ink-3);
+  }
+  .gdetails summary:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; border-radius: 3px; }
+  .ggroup { margin-top: 14px; }
+  .ggroup-head {
+    display: flex; gap: 10px; align-items: baseline;
+    font-family: var(--mono); font-size: 10.5px; letter-spacing: .1em; text-transform: uppercase;
+    color: var(--ink-2); padding-bottom: 6px; border-bottom: 1px solid var(--line);
+  }
+  .ggroup-head .gname { flex: 1; min-width: 0; color: var(--ink); font-weight: 600; overflow-wrap: anywhere; }
+  .ggroup-head .gnum { font-variant-numeric: tabular-nums; white-space: nowrap; }
+  .arow {
+    display: flex; gap: 10px; align-items: baseline;
+    padding-block: 6px; border-bottom: 1px dashed var(--line); font-size: 13.5px;
+  }
+  .arow:last-child { border-bottom: none; }
+  .arow .atitle { flex: 1; min-width: 0; overflow-wrap: anywhere; }
+  .arow .atitle a { color: inherit; text-decoration: none; }
+  .arow .atitle a:hover { text-decoration: underline; text-underline-offset: 3px; }
+  .arow .ascore { font-family: var(--mono); font-size: 12px; color: var(--ink-2); font-variant-numeric: tabular-nums; white-space: nowrap; }
+  .arow .apct { font-family: var(--mono); font-size: 12px; font-weight: 600; width: 46px; text-align: right; font-variant-numeric: tabular-nums; }
+  .arow.is-muted .atitle, .arow.is-muted .apct { color: var(--ink-3); }
+  .status {
+    font-family: var(--mono); font-size: 9.5px; letter-spacing: .1em; text-transform: uppercase;
+    padding: 2px 6px; border-radius: 3px; background: var(--surface-2); color: var(--ink-2); white-space: nowrap;
+  }
+  .status.s-missing { background: var(--urgent-soft); color: var(--urgent); font-weight: 600; }
+  .status.s-late { background: var(--h2s); color: var(--h2c); font-weight: 600; }
+
   footer {
     margin-top: 32px; padding-top: 18px; border-top: 1px solid var(--line);
     font-size: 12.5px; color: var(--ink-3); line-height: 1.6;
@@ -435,6 +506,9 @@
     .prep-type { width: auto; }
     .prep-row { flex-wrap: wrap; }
     .prep-row input:first-child { flex: 1 1 100%; }
+    .arow { flex-wrap: wrap; }
+    .arow .atitle { flex-basis: 100%; }
+    .arow .ascore { margin-right: auto; }
   }
   @media (prefers-reduced-motion: reduce) { * { transition: none !important; } }
 </style>
@@ -452,10 +526,15 @@
 
 <div class="wrap">
   <section class="hero">
-    <p class="kicker">Class prep tracker</p>
-    <h1>What has to be ready before class</h1>
-    <p class="sub">Put in your courses, your deadlines, and the reading or problem sets you owe before each session. Prep breaks into its own checklist, so you can see what's actually left rather than one undifferentiated due date.</p>
+    <p class="kicker" id="hero-kicker">Class prep tracker</p>
+    <h1 id="hero-title">What has to be ready before class</h1>
+    <p class="sub" id="hero-sub">Put in your courses, your deadlines, and the reading or problem sets you owe before each session. Prep breaks into its own checklist, so you can see what's actually left rather than one undifferentiated due date.</p>
   </section>
+
+  <div class="tabs" role="tablist" aria-label="View">
+    <button class="tab" id="tab-schedule" type="button" role="tab" aria-controls="view-schedule">Schedule</button>
+    <button class="tab" id="tab-grades" type="button" role="tab" aria-controls="view-grades">Grades</button>
+  </div>
 
   <div class="banner" id="banner" hidden>
     <div><strong>This is sample data</strong> — two made-up courses so the page isn't empty. Clear it when you're ready to add your own.</div>
@@ -463,16 +542,24 @@
     <button class="btn" id="btn-clear-sample" type="button">Clear sample data</button>
   </div>
 
-  <section class="tiles" id="tiles"></section>
+  <main id="view-schedule" role="tabpanel" aria-labelledby="tab-schedule">
+    <section class="tiles" id="tiles"></section>
 
-  <div class="progress-row">
-    <div class="bar"><span id="barfill" style="width:0%"></span></div>
-    <div class="bar-text" id="bartext">0 of 0 done</div>
-  </div>
+    <div class="progress-row">
+      <div class="bar"><span id="barfill" style="width:0%"></span></div>
+      <div class="bar-text" id="bartext">0 of 0 done</div>
+    </div>
 
-  <div class="controls" id="controls"></div>
+    <div class="controls" id="controls"></div>
 
-  <main id="stream"></main>
+    <div id="stream"></div>
+  </main>
+
+  <main id="view-grades" role="tabpanel" aria-labelledby="tab-grades" hidden>
+    <section class="tiles" id="grade-tiles"></section>
+    <p class="synced" id="grade-synced" hidden></p>
+    <div class="grade-list" id="grade-list"></div>
+  </main>
 
   <footer>
     <p><strong>Your data stays in this browser.</strong> Nothing is uploaded, and nobody else who opens this page sees your items — each person gets their own copy. That also means clearing your browser data wipes it, and it won't follow you to another device.</p>
@@ -598,7 +685,7 @@
         <li>Open Canvas and sign in as normal.</li>
         <li>Click the bookmark. Your tracker opens with everything filled in.</li>
       </ol>
-      <p class="hint">Pulls courses, assignments, due dates <em>and</em> prep pages — the readings, videos and problem sets owed before each class. It runs on Canvas's own page using your existing login, so there's no password or access token to hand over, and your assignments travel in the link itself rather than through any server.</p>
+      <p class="hint">Pulls courses, assignments, due dates, your grades <em>and</em> prep pages — the readings, videos and problem sets owed before each class. It runs on Canvas's own page using your existing login, so there's no password or access token to hand over, and your assignments travel in the link itself rather than through any server.</p>
     </section>
 
     <section class="opt">
@@ -729,7 +816,27 @@
         { id: "i5", courseId: "c1", kind: "exam", date: plusDays(9), time: "09:00",
           title: "Midterm 1", points: 100 }
       ],
-      checked: {}
+      checked: {},
+      grades: {
+        c1: { score: 88.06, grade: "B+", weighted: true,
+          groups: [{ id: 1, name: "Labs", weight: 40 }, { id: 2, name: "Quizzes", weight: 20 }, { id: 3, name: "Exams", weight: 40 }],
+          assignments: [
+            { id: 11, group: 1, title: "Lab 1 — Microscopy", pts: 30, score: 28, status: "graded", due: plusDays(-20) },
+            { id: 12, group: 1, title: "Lab 2 — Osmosis", pts: 30, score: 25, status: "late", due: plusDays(-10) },
+            { id: 13, group: 1, title: "Lab report — enzyme kinetics", pts: 30, score: null, status: "unsubmitted", due: plusDays(4) },
+            { id: 21, group: 2, title: "Quiz 1", pts: 10, score: 9, status: "graded", due: plusDays(-18) },
+            { id: 22, group: 2, title: "Quiz 2", pts: 10, score: 8.5, status: "graded", due: plusDays(-4) },
+            { id: 31, group: 3, title: "Midterm 1", pts: 100, score: null, status: "unsubmitted", due: plusDays(9) }
+          ] },
+        c2: { score: 66.32, grade: "D", weighted: false,
+          groups: [{ id: 4, name: "Response papers", weight: 0 }, { id: 5, name: "Participation", weight: 0 }],
+          assignments: [
+            { id: 41, group: 4, title: "Response paper 1", pts: 50, score: 44, status: "graded", due: plusDays(-15) },
+            { id: 42, group: 4, title: "Response paper 2", pts: 25, score: 0, status: "missing", due: plusDays(-5) },
+            { id: 43, group: 4, title: "Primary source response paper", pts: 50, score: null, status: "unsubmitted", due: plusDays(2) },
+            { id: 51, group: 5, title: "Seminar participation", pts: 20, score: 19, status: "graded", due: "" }
+          ] }
+      }
     };
   }
 
@@ -740,6 +847,7 @@
         var s = JSON.parse(raw);
         if (s && Array.isArray(s.courses) && Array.isArray(s.items)) {
           s.checked = s.checked || {};
+          s.grades = s.grades || {};
           return s;
         }
       }
@@ -816,7 +924,7 @@
   var controls = document.getElementById("controls");
   var banner = document.getElementById("banner");
 
-  function render() {
+  function renderSchedule() {
     banner.hidden = !state.sample;
 
     var now = new Date();
@@ -1052,6 +1160,255 @@
     return art;
   }
 
+  /* ---------- views ---------- */
+  var VIEW_KEY = "before-the-bell-view";
+  var view = "schedule";
+  try { if (localStorage.getItem(VIEW_KEY) === "grades") view = "grades"; } catch (e) {}
+
+  var heroKicker = document.getElementById("hero-kicker");
+  var heroTitle = document.getElementById("hero-title");
+  var heroSub = document.getElementById("hero-sub");
+  var HERO = {
+    schedule: { kicker: heroKicker.textContent, title: heroTitle.textContent, sub: heroSub.textContent },
+    grades: {
+      kicker: "Grade tracker",
+      title: "Where your grades stand",
+      sub: "Your current score in every course, straight from Canvas, broken down by assignment group with missing and late work flagged. Click the Sync my Canvas bookmark again whenever you want it refreshed."
+    }
+  };
+
+  function setView(v) {
+    view = v;
+    try { localStorage.setItem(VIEW_KEY, v); } catch (e) {}
+    render();
+  }
+  document.getElementById("tab-schedule").addEventListener("click", function () { setView("schedule"); });
+  document.getElementById("tab-grades").addEventListener("click", function () { setView("grades"); });
+
+  function render() {
+    var isGrades = view === "grades";
+    document.getElementById("tab-schedule").setAttribute("aria-selected", String(!isGrades));
+    document.getElementById("tab-grades").setAttribute("aria-selected", String(isGrades));
+    document.getElementById("view-schedule").hidden = isGrades;
+    document.getElementById("view-grades").hidden = !isGrades;
+    document.getElementById("btn-add").hidden = isGrades;
+    var h = HERO[view];
+    heroKicker.textContent = h.kicker;
+    heroTitle.textContent = h.title;
+    heroSub.textContent = h.sub;
+
+    renderSchedule();
+    renderGrades();
+  }
+
+  /* ---------- grades ---------- */
+  var gradeTiles = document.getElementById("grade-tiles");
+  var gradeList = document.getElementById("grade-list");
+  var gradeSynced = document.getElementById("grade-synced");
+  var openGrades = {};
+  var fSynced = new Intl.DateTimeFormat(undefined, { month: "short", day: "numeric", hour: "numeric", minute: "2-digit" });
+
+  var STATUS_LABEL = { missing: "Missing", late: "Late", excused: "Excused", submitted: "Submitted" };
+
+  function fmtNum(n) { return String(Math.round(Number(n) * 100) / 100); }
+  function fmtPct(n) { return (Math.round(n * 10) / 10).toFixed(1) + "%"; }
+  function dueOf(s) {
+    if (!s) return null;
+    var m = String(s).match(/^(\d{4})-(\d{2})-(\d{2})$/);
+    var d = m ? new Date(+m[1], +m[2] - 1, +m[3]) : new Date(s);
+    return isNaN(d) ? null : d;
+  }
+
+  /* Earned / possible per assignment group, counting only scored work — the
+     same basis as Canvas's "current" grade. */
+  function groupStats(g) {
+    var by = {};
+    (g.assignments || []).forEach(function (a) {
+      if (a.omit || a.status === "excused" || a.score == null) return;
+      var s = by[a.group] || (by[a.group] = { earned: 0, possible: 0 });
+      s.earned += Number(a.score) || 0;
+      s.possible += Number(a.pts) || 0;
+    });
+    return by;
+  }
+
+  /* Canvas's own total always wins; this only fills in when an instructor hides
+     it. It ignores drop rules, so it's labelled an estimate. */
+  function estimate(g, stats) {
+    if (g.weighted) {
+      var w = 0, sum = 0;
+      (g.groups || []).forEach(function (gr) {
+        var s = stats[gr.id];
+        if (s && s.possible > 0 && gr.weight > 0) { w += gr.weight; sum += gr.weight * s.earned / s.possible; }
+      });
+      return w ? sum / w * 100 : null;
+    }
+    var e = 0, p = 0;
+    Object.keys(stats).forEach(function (k) { e += stats[k].earned; p += stats[k].possible; });
+    return p ? e / p * 100 : null;
+  }
+
+  function gradeRows() {
+    return state.courses.filter(function (c) { return state.grades && state.grades[c.id]; }).map(function (c) {
+      var g = state.grades[c.id];
+      var stats = groupStats(g);
+      var est = g.score == null;
+      var as = (g.assignments || []).filter(function (a) { return !a.omit; });
+      var count = function (st) { return as.filter(function (a) { return a.status === st; }).length; };
+      return {
+        c: c, g: g, stats: stats, est: est,
+        pct: est ? estimate(g, stats) : Number(g.score),
+        total: as.length,
+        graded: as.filter(function (a) { return a.score != null && a.status !== "excused"; }).length,
+        missing: count("missing"),
+        late: count("late")
+      };
+    });
+  }
+
+  function renderGrades() {
+    var rows = gradeRows();
+    gradeTiles.textContent = "";
+    gradeList.textContent = "";
+
+    if (state.gradesPulledAt && !state.sample) {
+      gradeSynced.textContent = "Synced from Canvas " + fSynced.format(new Date(state.gradesPulledAt));
+      gradeSynced.hidden = false;
+    } else {
+      gradeSynced.hidden = true;
+    }
+
+    if (!rows.length) {
+      var e = el("div", "empty");
+      e.appendChild(el("p", null, "No grades yet. Click the Sync my Canvas bookmark on a Canvas tab and your grades for every course land here."));
+      var b = el("button", "btn btn-primary", "Set up Canvas sync");
+      b.type = "button";
+      b.addEventListener("click", function () {
+        importErr.hidden = true; importOk.hidden = true; dlgImport.showModal();
+      });
+      e.appendChild(b);
+      gradeList.appendChild(e);
+      return;
+    }
+
+    var scored = rows.filter(function (r) { return r.pct != null; });
+    var avg = scored.length ? scored.reduce(function (s, r) { return s + r.pct; }, 0) / scored.length : null;
+    var low = scored.slice().sort(function (a, b) { return a.pct - b.pct; })[0];
+    var missing = rows.reduce(function (s, r) { return s + r.missing; }, 0);
+
+    gradeTiles.appendChild(tile("Average", avg == null ? "—" : fmtPct(avg),
+      "across " + scored.length + (scored.length === 1 ? " course" : " courses"), false));
+    gradeTiles.appendChild(tile("Lowest", low ? fmtPct(low.pct) : "—",
+      low ? (low.c.code || low.c.name) + " · " + low.c.name : "Nothing graded yet", false));
+    gradeTiles.appendChild(tile("Missing work", String(missing),
+      missing ? (missing === 1 ? "assignment marked missing" : "assignments marked missing") : "Nothing marked missing",
+      missing > 0));
+
+    rows.forEach(function (r) { gradeList.appendChild(gradeCard(r)); });
+  }
+
+  function gradeCard(r) {
+    var g = r.g;
+    var art = el("article", "gcard");
+    art.style.setProperty("--hue", hueVar(r.c));
+    art.appendChild(el("div", "stripe"));
+    var body = el("div", "gcard-body");
+
+    var top = el("div", "gcard-top");
+    var head = el("div", "gcard-head");
+    var eye = el("div", "eyebrow");
+    eye.appendChild(el("span", "course-tag", r.c.code || r.c.name));
+    head.appendChild(eye);
+    head.appendChild(el("h3", "gcard-name", r.c.name));
+    var meta = el("div", "gcard-meta",
+      r.graded + " of " + r.total + " graded · " + (g.weighted ? "weighted by group" : "by total points"));
+    if (r.missing) meta.appendChild(el("span", "bad", " · " + r.missing + " missing"));
+    if (r.late) meta.appendChild(document.createTextNode(" · " + r.late + " late"));
+    head.appendChild(meta);
+    top.appendChild(head);
+
+    var sc = el("div", "gscore");
+    sc.appendChild(el("div", "gscore-pct" + (r.pct != null && r.pct < 70 ? " low" : ""),
+      r.pct == null ? "—" : fmtPct(r.pct)));
+    var sub = r.pct == null ? "no grades yet"
+      : r.est ? (g.hidden ? "estimate · total hidden" : "estimate")
+      : g.grade || "";
+    if (sub) sc.appendChild(el("div", "gscore-letter", sub));
+    top.appendChild(sc);
+    body.appendChild(top);
+
+    var bar = el("div", "bar");
+    var fill = el("span");
+    fill.style.width = Math.max(0, Math.min(100, r.pct || 0)) + "%";
+    bar.appendChild(fill);
+    body.appendChild(bar);
+
+    var as = g.assignments || [];
+    if (as.length) {
+      var det = document.createElement("details");
+      det.className = "gdetails";
+      det.open = !!openGrades[r.c.id];
+      det.addEventListener("toggle", function () { openGrades[r.c.id] = det.open; });
+      det.appendChild(el("summary", null, "Breakdown"));
+
+      var groups = (g.groups || []).slice();
+      var known = {};
+      groups.forEach(function (gr) { known[gr.id] = true; });
+      if (as.some(function (a) { return !known[a.group]; })) groups.push({ id: "__other", name: "Other" });
+
+      groups.forEach(function (gr) {
+        var list = as.filter(function (a) { return gr.id === "__other" ? !known[a.group] : a.group === gr.id; });
+        if (!list.length) return;
+        list.sort(function (a, b) {
+          var da = dueOf(a.due), db = dueOf(b.due);
+          if (!da || !db) return da ? -1 : db ? 1 : 0;
+          return da - db;
+        });
+
+        var sec = el("div", "ggroup");
+        var gh = el("div", "ggroup-head");
+        gh.appendChild(el("span", "gname", gr.name));
+        if (g.weighted && gr.weight) gh.appendChild(el("span", "gnum", fmtNum(gr.weight) + "% of grade"));
+        var s = r.stats[gr.id];
+        gh.appendChild(el("span", "gnum", s && s.possible ? fmtPct(s.earned / s.possible * 100) : "—"));
+        sec.appendChild(gh);
+        list.forEach(function (a) { sec.appendChild(assignmentRow(a, g)); });
+        det.appendChild(sec);
+      });
+      body.appendChild(det);
+    }
+
+    art.appendChild(body);
+    return art;
+  }
+
+  function assignmentRow(a, g) {
+    var scored = a.score != null && a.status !== "excused";
+    var row = el("div", "arow" + (!scored && a.status !== "missing" || a.omit ? " is-muted" : ""));
+
+    var t = el("span", "atitle");
+    var href = g.origin && g.canvasId ? safeUrl(g.origin + "/courses/" + g.canvasId + "/assignments/" + a.id) : "";
+    if (href) {
+      var link = el("a", null, a.title);
+      link.href = href; link.target = "_blank"; link.rel = "noopener noreferrer";
+      t.appendChild(link);
+    } else {
+      t.textContent = a.title;
+    }
+    row.appendChild(t);
+
+    if (STATUS_LABEL[a.status]) row.appendChild(el("span", "status s-" + a.status, STATUS_LABEL[a.status]));
+
+    var due = dueOf(a.due);
+    row.appendChild(el("span", "ascore", scored
+      ? fmtNum(a.score) + " / " + fmtNum(a.pts)
+      : due && a.status === "unsubmitted" ? "due " + fMonthDay.format(due)
+      : "– / " + fmtNum(a.pts)));
+    row.appendChild(el("span", "apct", scored && Number(a.pts) > 0
+      ? Math.round(a.score / a.pts * 100) + "%" : ""));
+    return row;
+  }
+
   /* ---------- item dialog ---------- */
   var dlgItem = document.getElementById("dlg-item");
   var prepRows = document.getElementById("prep-rows");
@@ -1248,6 +1605,7 @@
           return true;
         });
         state.courses = state.courses.filter(function (x2) { return x2.id !== c.id; });
+        delete state.grades[c.id];
         if (filter === c.id) filter = "all";
         save(); buildCourseList(); render();
       });
@@ -1359,7 +1717,7 @@
     if (!payload || !Array.isArray(payload.items)) throw new Error("bad payload");
 
     if (state.sample) {
-      state = { sample: false, courses: [], items: [], checked: {} };
+      state = { sample: false, courses: [], items: [], checked: {}, grades: {} };
       filter = "all";
     }
 
@@ -1371,14 +1729,10 @@
     var byExt = {};
     state.items.forEach(function (i) { if (i.ext) byExt[i.ext] = i; });
 
-    var added = 0, updated = 0, madeCourses = 0, withPrep = 0;
+    var added = 0, updated = 0, madeCourses = 0, withPrep = 0, graded = 0;
 
-    payload.items.forEach(function (raw) {
-      if (!raw.title || !raw.date) return;
-      var d = new Date(raw.date);
-      if (isNaN(d)) return;
-
-      var meta = courseNames[raw.courseId] || {};
+    function courseFor(canvasId) {
+      var meta = courseNames[canvasId] || {};
       var code = shortCode(meta.code || meta.name || "CANVAS");
       var course = byCode[code];
       if (!course) {
@@ -1391,6 +1745,15 @@
         byCode[code] = course;
         madeCourses++;
       }
+      return course;
+    }
+
+    payload.items.forEach(function (raw) {
+      if (!raw.title || !raw.date) return;
+      var d = new Date(raw.date);
+      if (isNaN(d)) return;
+
+      var course = courseFor(raw.courseId);
 
       var parsed = raw.type === "wiki_page" ? parsePrepBody(raw.body) : { prep: [], inClass: "" };
       if (parsed.prep.length) withPrep++;
@@ -1429,9 +1792,29 @@
       }
     });
 
+    /* Canvas owns grades outright, so each pull replaces a course's grades
+       wholesale; courses missing from this pull (ended terms) keep their last. */
+    if (Array.isArray(payload.grades)) {
+      payload.grades.forEach(function (raw) {
+        var course = courseFor(raw.courseId);
+        state.grades[course.id] = {
+          canvasId: raw.courseId,
+          origin: payload.origin || "",
+          score: raw.score == null ? null : Number(raw.score),
+          grade: raw.grade || "",
+          weighted: !!raw.weighted,
+          hidden: !!raw.hidden,
+          groups: Array.isArray(raw.groups) ? raw.groups : [],
+          assignments: Array.isArray(raw.assignments) ? raw.assignments : []
+        };
+        graded++;
+      });
+      state.gradesPulledAt = payload.pulledAt || new Date().toISOString();
+    }
+
     save();
     render();
-    return { added: added, updated: updated, courses: madeCourses, withPrep: withPrep };
+    return { added: added, updated: updated, courses: madeCourses, withPrep: withPrep, graded: graded };
   }
 
   function b64decode(s) {
@@ -1462,6 +1845,7 @@
     if (res.updated) parts.push(res.updated + " updated");
     if (res.courses) parts.push(res.courses + (res.courses === 1 ? " course" : " courses"));
     if (res.withPrep) parts.push(res.withPrep + " with prep steps");
+    if (res.graded) parts.push("grades for " + res.graded + (res.graded === 1 ? " course" : " courses"));
     importOk.textContent = "Imported from Canvas: " + (parts.join(", ") || "nothing new") + ".";
     importOk.hidden = false;
     dlgImport.showModal();
@@ -1528,7 +1912,7 @@
 
     /* A first import replaces the sample data rather than mixing with it. */
     if (state.sample) {
-      state = { sample: false, courses: [], items: [], checked: {} };
+      state = { sample: false, courses: [], items: [], checked: {}, grades: {} };
       filter = "all";
     }
 
@@ -1690,6 +2074,7 @@
     }
     if (!window.confirm("Replace everything currently in this browser with the pasted backup?")) return;
     parsed.checked = parsed.checked || {};
+    parsed.grades = parsed.grades || {};
     state = parsed;
     filter = "all";
     save();
@@ -1700,7 +2085,7 @@
   /* ---------- sample data ---------- */
   document.getElementById("btn-clear-sample").addEventListener("click", function () {
     if (!window.confirm("Clear the sample courses and items?")) return;
-    state = { sample: false, courses: [], items: [], checked: {} };
+    state = { sample: false, courses: [], items: [], checked: {}, grades: {} };
     filter = "all";
     save();
     render();

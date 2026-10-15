@@ -32,7 +32,7 @@
 
   try {
     say("Loading your courses…");
-    var courses = await get("/api/v1/courses?enrollment_state=active&include[]=term&per_page=100");
+    var courses = await get("/api/v1/courses?enrollment_state=active&include[]=term&include[]=total_scores&per_page=100");
 
     var start = new Date();
     var end = new Date(Date.now() + DAYS * 864e5);
@@ -73,14 +73,64 @@
       if (entry.title) items.push(entry);
     }
 
+    /* Grades: the course total Canvas shows the student, plus every assignment
+       group and submission so the tracker can break the total down. */
+    var grades = [];
+    var studentCourses = courses.filter(function (c) {
+      return (c.enrollments || []).some(function (e) { return e.type === "student"; });
+    });
+    for (var g = 0; g < studentCourses.length; g++) {
+      var c = studentCourses[g];
+      say("Reading grades for course " + (g + 1) + " of " + studentCourses.length + "…");
+      var enr = (c.enrollments || []).filter(function (e) { return e.type === "student"; })[0] || {};
+      var entryG = {
+        courseId: c.id,
+        score: enr.computed_current_score == null ? null : enr.computed_current_score,
+        grade: enr.computed_current_grade || "",
+        finalScore: enr.computed_final_score == null ? null : enr.computed_final_score,
+        weighted: !!c.apply_assignment_group_weights,
+        hidden: !!c.hide_final_grades,
+        groups: [],
+        assignments: []
+      };
+      try {
+        var groups = await get("/api/v1/courses/" + c.id +
+          "/assignment_groups?include[]=assignments&include[]=submission&per_page=100");
+        groups.forEach(function (grp) {
+          entryG.groups.push({ id: grp.id, name: grp.name, weight: grp.group_weight || 0 });
+          (grp.assignments || []).forEach(function (a) {
+            var sub = a.submission || {};
+            var status = sub.excused ? "excused"
+              : sub.missing ? "missing"
+              : sub.score != null ? (sub.late ? "late" : "graded")
+              : sub.submitted_at ? "submitted"
+              : "unsubmitted";
+            entryG.assignments.push({
+              id: a.id,
+              group: grp.id,
+              title: (a.name || "").trim(),
+              pts: a.points_possible || 0,
+              score: sub.score == null ? null : sub.score,
+              grade: sub.grade || "",
+              status: status,
+              due: a.due_at || "",
+              omit: !!a.omit_from_final_grade
+            });
+          });
+        });
+      } catch (e) { /* the course total alone is still worth showing */ }
+      grades.push(entryG);
+    }
+
     var payload = {
-      v: 1,
+      v: 2,
       origin: location.origin,
       pulledAt: new Date().toISOString(),
       courses: courses.map(function (c) {
         return { id: c.id, name: c.name, code: c.course_code, term: c.term && c.term.name };
       }),
-      items: items
+      items: items,
+      grades: grades
     };
 
     var json = JSON.stringify(payload);
@@ -91,12 +141,14 @@
     }
 
     var target = SITE + "#import=" + btoa(s);
-    say("Found " + items.length + " items — opening your tracker…");
+    var found = "Found " + items.length + " items and grades for " + grades.length +
+      (grades.length === 1 ? " course" : " courses");
+    say(found + " — opening your tracker…");
 
     /* A blocked popup shouldn't lose the pull: offer a link instead, since
        clicking it is the user gesture the browser wanted. */
     if (!window.open(target, "_blank")) {
-      box.textContent = "Found " + items.length + " items. ";
+      box.textContent = found + ". ";
       var a = document.createElement("a");
       a.href = target;
       a.target = "_blank";

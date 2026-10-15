@@ -46,6 +46,20 @@ same reason. `parsePrepBody()` reads the shape most Canvas prep pages share — 
 Reading / Video / Problem set steps. Professors write these pages freehand, so it
 is heuristic; unmatched lines attach to the step above rather than being dropped.
 
+### Grades
+
+The same bookmarklet click also pulls grades for every course where you're
+enrolled as a student: the course total Canvas shows you
+(`computed_current_score` / `_grade`, via `include[]=total_scores`), plus each
+assignment group's weight and every assignment's submission — score, and whether
+it's missing, late, excused or submitted. They appear under the **Grades** tab,
+with a per-group breakdown for each course.
+
+Canvas owns grades, so each sync replaces a course's grades wholesale. When an
+instructor hides the course total, the tracker estimates one from the scored
+work (weighted by group when the course is); that estimate ignores drop rules,
+so it's labelled as such.
+
 ### Calendar file
 
 The `.ics` from Calendar → Calendar Feed. Titles and due dates only, no prep
