@@ -1724,6 +1724,9 @@
     fetch("bookmarklet.js")
       .then(function (r) { return r.ok ? r.text() : Promise.reject(new Error("missing")); })
       .then(function (src) {
+        /* Send imports back to wherever this page is hosted, not a fixed domain. */
+        var here = location.origin + location.pathname.replace(/[^\/]*$/, "");
+        src = src.replace(/var SITE = "[^"]*";/, function () { return "var SITE = " + JSON.stringify(here) + ";"; });
         link.href = "javascript:" + encodeURIComponent(src);
         document.getElementById("opt-bm").hidden = false;
         link.addEventListener("click", function (e) {

@@ -1,5 +1,7 @@
 (async function () {
-  var SITE = "https://keenanallaf-blckarrw.github.io/before-the-bell/";
+  /* index.html swaps in its own address when it builds the bookmark; this is
+     the fallback if the file is used on its own. */
+  var SITE = "https://neilshah2026.github.io/canvas-tracker/";
   var DAYS = 60;
 
   if (!/instructure\.com$/i.test(location.hostname)) {
